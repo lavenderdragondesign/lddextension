@@ -1,0 +1,13 @@
+.wrap{width:260px;padding:14px;font:14px system-ui;color:#111}
+.logo{width:48px;height:48px;display:block;margin:0 auto 8px}
+h1{text-align:center;font-size:16px;margin:0 0 6px}
+.sub{text-align:center;font-size:12px;color:#666;margin:0 0 10px}
+.actions{display:flex;gap:8px;margin-bottom:8px}
+button{flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;background:#f6f6f6;cursor:pointer}
+button:hover{background:#eee}
+.modal.hidden{display:none}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:9999}
+.card{background:#fff;padding:16px;border-radius:8px;width:220px;box-shadow:0 2px 8px rgba(0,0,0,.3);text-align:center}
+.modal-actions{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.modal-actions button{padding:6px;border-radius:6px;border:1px solid #ddd;background:#f6f6f6}
+.modal-actions button:hover{background:#eee}
