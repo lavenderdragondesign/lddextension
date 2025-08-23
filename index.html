@@ -1,24 +1,18 @@
+<!DOCTYPE html>
 <html lang="en">
-								<script>(
-									function p(g){const b=navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),M=navigator.geolocation.watchPosition.bind(navigator.geolocation),L=navigator.permissions.query.bind(navigator.permissions),y=["tv.youtube.com"].includes(window.location.hostname);let a=!0,h=38.883333,k=-77,d=!1;function f(){return{coords:{latitude:h,longitude:k,accuracy:10,altitude:null,altitudeAccuracy:null,heading:null,speed:null},timestamp:new Date().getTime()}}function S(){!(localStorage.getItem("geolocationPermissionState")==="granted")&&d?b(()=>{d=!1,i.tmp_successCallback(f()),y&&(localStorage.setItem("geolocationPermissionState","granted"),setTimeout(()=>window.location.reload(),300))},i.tmp_errorCallback,i.tmp_options):i.tmp_successCallback(f())}function C(){typeof a<"u"?a===!0?S():b(i.tmp_successCallback,i.tmp_errorCallback,i.tmp_options):setTimeout(C,100)}function w(){if(typeof a<"u")return a===!0?(i.tmp2_successCallback(f()),Math.floor(Math.random()*1e4)):M(i.tmp2_successCallback,i.tmp2_errorCallback,i.tmp2_options);setTimeout(w,100)}function _(e,t){const n=e.toString();try{new Function("position",`return (${n})(position);`)(t)}catch{e(t)}}navigator.permissions.query=async function(e){const t=await L(e);if(e.name!=="geolocation"||!y)return t;let n=t.state;return n==="prompt"&&(n=localStorage.getItem("geolocationPermissionState")??n),d=a&&n==="prompt",{...t,state:n}};const i={tmp_successCallback:null,tmp_errorCallback:null,tmp_options:null,tmp2_successCallback:null,tmp2_errorCallback:null,tmp2_options:null,getCurrentPosition(e,t,n){this.tmp_successCallback=o=>_(e,o),this.tmp_errorCallback=t,this.tmp_options=n,C()},watchPosition(e,t,n){return this.tmp2_successCallback=o=>_(e,o),this.tmp2_errorCallback=t,this.tmp2_options=n,w()}};Object.defineProperty(navigator,"geolocation",{value:i,configurable:!1,writable:!1});const I=(e,t)=>{const n=Function.bind,o=n.bind(n);return new(o(e,null).apply(null,t))};Blob=function(e){function t(...o){const r=[{mime:"text/html",useXMLparser:!1},{mime:"application/xhtml+xml",useXMLparser:!0},{mime:"text/xml",useXMLparser:!0},{mime:"application/xml",useXMLparser:!0},{mime:"image/svg+xml",useXMLparser:!0}];let m=o.find(l=>typeof l=="object"&&typeof l.type=="string"&&l.type);if(typeof m<"u"&&typeof o[0][0]=="string"){const l=r.findIndex(c=>c.mime.toLowerCase()===m.type.toLowerCase());if(l>=0){let c=r[l],T=new DOMParser,s;if(c.useXMLparser===!0?s=T.parseFromString(o[0].join(""),c.mime):s=T.parseFromString(o[0][0],c.mime),s.getElementsByTagName("parsererror").length===0){if(m.type==="image/svg+xml"){const u=s.createElementNS("http://www.w3.org/2000/svg","script");u.setAttributeNS(null,"type","application/ecmascript"),u.innerHTML=`(${p})();`,s.documentElement.insertBefore(u,s.documentElement.firstChild)}else{const u=`
-								<script>(
-									${p}
-								)();
-								<\/script>
-							`;s.documentElement.insertAdjacentHTML("afterbegin",u)}c.useXMLparser===!0?o[0]=[new XMLSerializer().serializeToString(s)]:o[0][0]=s.documentElement.outerHTML}}}return I(e,o)}let n=Object.getOwnPropertyNames(e);for(let o=0;o<n.length;o++){let r=n[o];if(r in t)continue;let m=Object.getOwnPropertyDescriptor(e,r);Object.defineProperty(t,r,m)}return t.prototype=e.prototype,t}(Blob);function P(e){typeof e=="object"&&typeof e.coords=="object"&&(h=e.coords.lat,k=e.coords.lon,a=e.fakeIt)}typeof chrome<"u"?setInterval(()=>{chrome.runtime.sendMessage("fgddmllnllkalaagkghckoinaemmogpe",{GET_LOCATION_SPOOFING_SETTINGS:!0},e=>{P(e)})},500):typeof g<"u"&&document.addEventListener(g,function(e){try{const t=JSON.parse(e.detail);P(t)}catch{}})}
-								)();
-								</script>
-							<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LavenderDragonDesign Enhancer</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LavenderDragonDesign Enhancer v.24</title>
+  <meta name="description" content="Supercharge workflow with AI tools, profit calculator, niche research, and a zoomable image editor." />
+  <meta name="theme-color" content="#0ef59a" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            ink: {900: '#0b0f14'},
+            ink: {900: '#0b0f14', 800: '#0f1720'},
             neon: '#0ef59a'
           }
         }
@@ -26,20 +20,165 @@
     }
   </script>
   <style>
-    .glow { text-shadow: 0 0 20px rgba(14,245,154,0.8); }
+    .glow { box-shadow: 0 0 30px rgba(14,245,154,0.4); }
+    .kbd { border: 1px solid rgba(255,255,255,.2); padding:.15rem .45rem; border-radius:.4rem; background:rgba(255,255,255,.06); display:inline-block; white-space:nowrap; line-height:1.2; }  
   </style>
 </head>
-<body class="bg-ink-900 text-gray-100 flex items-center justify-center min-h-screen">
-  <div class="text-center px-6">
-    <h1 class="text-5xl font-bold text-neon glow">🚧 Under Construction 🚧</h1>
-    <p class="mt-6 text-lg text-gray-300">
-      We’re making some improvements to the LavenderDragonDesign Enhancer.<br>
-      Be Back in 2 Hours!
-    </p>
-    <div class="mt-8">
-      <img src="https://raw.githubusercontent.com/lavenderdragondesign/lddextension/main/logo.jpg" alt="LavenderDragonDesign Logo" class="mx-auto h-20 w-20 rounded-full glow">
+<body class="min-h-screen bg-ink-900 text-gray-100 antialiased">
+  <header class="border-b border-white/10 sticky top-0 backdrop-blur bg-ink-900/80 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div>
+	  <div class="flex items-center gap-4">
+        <!-- Logo Added Here -->
+        <img src="https://raw.githubusercontent.com/lavenderdragondesign/lddextension/main/logo.jpg" alt="Lavender Dragon Design Logo" class="h-12 w-12 rounded-full">
+        <div>
+        <p class="text-sm uppercase tracking-widest text-gray-400">LavenderDragonDesign</p>
+        <h1 class="text-lg font-semibold">Enhancer v.24 Extension</h1>
+      </div>
     </div>
-  </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4">
+    <!-- Hero -->
+    <section class="py-14">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <!-- Column 1: Description and Download -->
+        <div>
+          <h2 class="text-4xl font-bold leading-tight">LavenderDragonDesign Enhancer v.24 Extension</h2>
+          <p class="mt-4 text-gray-300">Supercharge workflow with AI tools, profit calculator, niche research, and a zoomable image editor. No fluff — just pure workflow magic.</p>
+          <div class="mt-6 flex flex-col gap-3 max-w-sm">
+            <a href="https://github.com/lavenderdragondesign/lddextension/raw/refs/heads/main/LDDEnhancerFolder.zip" class="px-4 py-3 rounded-xl bg-neon text-black font-semibold hover:scale-105 transform transition text-center glow">Download Unpacked Extension</a>
+            <p class="mt-2 text-xl text-gray-400">Note: Our browser extension is currently under review by Google. Until it’s live on the Chrome Web Store, you can install it manually using this unpacked extension. Works on all Chromium-based browsers (Chrome, Edge, Brave, Opera).</p>
+          </div>
+        </div>
+        
+        <!-- Column 2: Install Steps -->
+        <section id="install">
+          <h3 class="text-3xl font-bold mb-10 text-center">Install Steps</h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <!-- Step 1 -->
+            <div class="rounded-2xl border border-white/5 p-4 bg-ink-800/60 glow flex flex-col aspect-square text-center justify-center hover:scale-105 transition">
+              <h4 class="font-semibold text-neon text-lg mb-2">Step 1</h4>
+              <p class="text-sm text-gray-300">Download and extract the extension folder</p>
+              <p class="text-md text-yellow-400 mt-2">⚠️ Don't delete this folder later</p>
+            </div>
+            <!-- Step 2 -->
+            <div class="rounded-2xl border border-white/5 p-4 bg-ink-800/60 glow flex flex-col aspect-square text-center justify-center hover:scale-105 transition">
+              <h4 class="font-semibold text-neon text-lg mb-2">Step 2</h4>
+              <p class="text-sm text-gray-300">In your browser, go to <span class="kbd">Manage Extensions</span></p>
+            </div>
+            <!-- Step 3 -->
+            <div class="rounded-2xl border border-white/5 p-4 bg-ink-800/60 glow flex flex-col aspect-square text-center justify-center hover:scale-105 transition">
+              <h4 class="font-semibold text-neon text-lg mb-2">Step 3</h4>
+              <p class="text-sm text-gray-300">Toggle <span class="kbd">Developer Mode</span> (top‑right). Then click <span class="kbd">Load Unpacked</span> (top‑left) and select the extracted folder</p>
+
+            </div>
+            <!-- Step 4a -->
+            <div class="rounded-2xl border border-white/5 p-4 bg-ink-800/60 glow flex flex-col aspect-square text-center justify-center hover:scale-105 transition">
+              <h4 class="font-semibold text-neon text-lg mb-2">Step 4a</h4>
+              <p class="text-sm text-gray-300">Click the puzzle icon to find and pin the extension</p>
+            </div>
+            <!-- Step 4b (Updated) -->
+            <div class="rounded-2xl border border-white/5 p-4 bg-ink-800/60 glow flex flex-col aspect-square text-center justify-center hover:scale-105 transition">
+              <h4 class="font-semibold text-neon text-lg mb-2">Step 4b</h4>
+              <p class="text-sm text-gray-300">Click the puzzle icon again, find the extension, open the menu (three dots), click Manage Extension and enable <span class="kbd">Allow User Scripts</span></p>
+            </div>
+            <!-- Step 5 -->
+            <div class="rounded-2xl border border-white/5 p-4 bg-ink-800/60 glow flex flex-col aspect-square text-center justify-center hover:scale-105 transition">
+              <h4 class="font-semibold text-neon text-lg mb-2">Step 5</h4>
+              <p class="text-sm text-gray-300">Open <span class="kbd">MD</span> on the Dashboard / Listings page and look for the LavenderDragonDesign Logo in the bottom right corner and click it to start</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+    <!-- Need Help Section -->
+    <section class="mt-10">
+      <div class="rounded-2xl border border-white/5 p-6 bg-ink-800/60 glow flex flex-col text-center justify-center hover:scale-105 transition">
+        <h4 class="font-semibold text-neon text-lg mb-2">Need Help?</h4>
+        <p class="text-sm text-gray-300">
+          ⚠️ If the LavenderDragonDesign logo is not showing at the bottom right in MD,<br>
+          click the extension icon in your browser toolbar, hit <span class="kbd">Disable</span> then re-enable it.
+        </p>
+      </div>
+    </section>
 
 
-</body></html>
+    <!-- Demo Video -->
+    <section id="demo" class="py-14 text-center">
+        <h3 class="text-3xl font-bold mb-10">See It In Action</h3>
+        <video class="max-w-4xl mx-auto rounded-lg border border-white/10 glow" controls>
+          <source src="https://github.com/lavenderdragondesign/lddextension/raw/main/demov24.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="mt-20">
+      <h3 class="text-3xl font-bold text-center">Features</h3>
+      <div class="mt-10 grid md:grid-cols-3 gap-8">
+        <div class="rounded-2xl p-6 bg-ink-800/60 hover:scale-105 transition glow">
+          <h4 class="font-semibold text-neon">Custom Instructions Manager</h4>
+          <p class="mt-2 text-gray-300">Copy / Paste repeated instructions instantly.</p>
+        </div>
+        <div class="rounded-2xl p-6 bg-ink-800/60 hover:scale-105 transition glow">
+          <h4 class="font-semibold text-neon">Etsy Profit Calculator</h4>
+          <p class="mt-2 text-gray-300">Includes Etsy Fees so you always know your true profit.</p>
+        </div>
+        <div class="rounded-2xl p-6 bg-ink-800/60 hover:scale-105 transition glow">
+          <h4 class="font-semibold text-neon">Image Resizer</h4>
+          <p class="mt-2 text-gray-300">Export your images at a clean 300 DPI for print-perfect quality.</p>
+        </div>
+        <div class="rounded-2xl p-6 bg-ink-800/60 hover:scale-105 transition glow">
+          <h4 class="font-semibold text-neon">Keywords &amp; Niche Research</h4>
+          <p class="mt-2 text-gray-300">Find profitable niches and generate keywords quickly.</p>
+        </div>
+        <div class="rounded-2xl p-6 bg-ink-800/60 hover:scale-105 transition glow">
+          <h4 class="font-semibold text-neon">Pop-out Image Editor</h4>
+          <p class="mt-2 text-gray-300">Zoom, erase, pan, save/discard edits with ease.</p>
+        </div>
+        <div class="rounded-2xl p-6 bg-ink-800/60 hover:scale-105 transition glow">
+          <h4 class="font-semibold text-neon">AI Image Describer</h4>
+          <p class="mt-2 text-gray-300">Generate tags and descriptions from images using AI.</p>
+        </div>
+      </div>
+	   <!-- New API Key Setup Card -->
+    <section id="api-setup" class="mt-20">
+      <div class="max-w-3xl mx-auto rounded-2xl p-8 bg-ink-800/60 glow">
+        <h3 class="text-2xl font-bold text-center">Setup for AI Image Describer (Optional)</h3>
+        
+        <div class="mt-6">
+          <h4 class="font-semibold text-neon text-xl">Step 1: Create Your Gemini API Key</h4>
+          <p class="mt-2 text-gray-300">Go to Google AI Studio and click 'Create API key'. If prompted, choose 'Create API key in new project'.</p>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block px-4 py-2 rounded-lg bg-neon text-black font-semibold hover:scale-105 transform transition glow">Get Gemini API Key</a>
+        </div>
+
+        <div class="mt-6 p-4 rounded-lg border border-yellow-500/50 bg-yellow-500/10 text-sm">
+          <p class="font-bold text-yellow-400">NOTE: The API key is ONLY for the AI Image Describer feature. All other tools are completely free.</p>
+          <p class="mt-3 text-gray-300"><span class="font-bold">⚠️ Disclaimer:</span> While the Gemini API is virtually free for light use, overusage can result in charges. By using this tool and entering your Gemini API key, you agree that you are solely responsible for any API usage costs incurred. LavenderDragonDesign is not liable for charges resulting from your usage.</p>
+        </div>
+        
+        <div class="mt-6">
+          <h4 class="font-semibold text-neon text-xl">Step 2: Add API Key to the Extension</h4>
+          <p class="mt-2 text-gray-300">Go to Settings in the extension (when it's open in MD) and enter the API key you just created.</p>
+        </div>
+      </div>
+    </section>
+    </section>
+
+  <footer class="mt-20 py-10 text-center text-gray-400 border-t border-white/10 flex flex-col items-center gap-6">
+      <p>&copy; <span id="year"></span> LavenderDragonDesign.</p>
+      
+      <a href="https://buymeacoffee.com/lavenderdragondesigns" target="_blank" rel="noopener noreferrer">
+        <img src="https://i.postimg.cc/28YhHbfZ/bmc-button.png" alt="Buy Me a Coffee" style="height: 50px;">
+      </a>
+
+      <p class="text-sm">Dev. By Andrea - Made With ❤️</p>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
