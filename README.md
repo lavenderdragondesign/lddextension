@@ -1,3 +1,14 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/lavenderdragondesign/lddextension/main/icon128.png" width="140" />
+</p>
+
+<p align="center">
+  <b>LDD MD Enhancer</b><br/>
+  Faster workflow. Less clicking.
+</p>
+
+
+
 ## LDD MD Enhancer v0.34  
 ### The MD toolkit — redone right.
 
