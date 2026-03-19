@@ -100,39 +100,6 @@
       background: radial-gradient(ellipse at 50% 20%, rgba(91,94,244,0.16) 0%, rgba(139,92,246,0.08) 40%, transparent 70%);
     }
 
-    .hero-logo-wrap {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 28px;
-      position: relative;
-      z-index: 2;
-      animation: fadeUp 0.5s ease both;
-    }
-    .hero-logo-wrap::before {
-      content: '';
-      position: absolute;
-      inset: 50% auto auto 50%;
-      width: 180px;
-      height: 180px;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(139,92,246,0.28) 0%, rgba(91,94,244,0.18) 35%, rgba(91,94,244,0.07) 55%, transparent 72%);
-      filter: blur(12px);
-      animation: heroPulse 3.6s ease-in-out infinite;
-      pointer-events: none;
-    }
-    .hero-logo {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 24px;
-      position: relative;
-      z-index: 1;
-      box-shadow:
-        0 18px 50px rgba(0,0,0,0.45),
-        0 0 40px rgba(91,94,244,0.25);
-    }
-
     .returning-badge {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 7px 16px;
@@ -465,10 +432,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-    @keyframes heroPulse {
-      0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.96); }
-      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
-    }
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
@@ -483,25 +446,24 @@
 
 <nav>
   <a href="#" class="nav-brand">
-    <img src="icon128.png" alt="LDD" style="width:30px;height:30px;border-radius:9px;object-fit:cover;box-shadow:0 4px 14px rgba(91,94,244,0.4);">
+    <img src="https://raw.githubusercontent.com/lavenderdragondesign/lddextension/main/logo.jpg" alt="LDD" style="width:30px;height:30px;border-radius:9px;object-fit:cover;box-shadow:0 4px 14px rgba(91,94,244,0.4);">
     LDD MD Enhancer
   </a>
   <div class="nav-right">
     <span class="nav-wip">🔨 In active development</span>
-    <a href="https://github.com/lavenderdragondesign/lddextension" class="nav-cta" target="_blank" rel="noopener">
+    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="nav-cta" target="_blank" rel="noopener">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
       GitHub
     </a>
   </div>
 </nav>
+<div style="display:flex; flex-direction:column; align-items:center; margin-bottom:20px;">
+  <img src="icon128.png" alt="LDD Logo" style="width:120px; height:auto; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.3);" />
+</div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-orb"></div>
-
-  <div class="hero-logo-wrap">
-    <img src="icon128.png" alt="LDD Logo" class="hero-logo">
-  </div>
 
   <div class="returning-badge">
     <span>🔁</span>
@@ -519,7 +481,7 @@
   </p>
 
   <div class="hero-ctas">
-    <a href="https://github.com/lavenderdragondesign/lddextension" class="btn-primary">
+    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download Extension — Free
     </a>
@@ -762,7 +724,7 @@
       <div class="step reveal">
         <div class="step-n">1</div>
         <h3>Download the extension</h3>
-        <p>Click the download button above or <a href="https://github.com/lavenderdragondesign/lddextension" style="color:var(--p3);">download directly here</a>. Extract the ZIP somewhere permanent — don't delete the folder afterwards.</p>
+        <p>Click the download button above or <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" style="color:var(--p3);">download directly here</a>. Extract the ZIP somewhere permanent — don't delete the folder afterwards.</p>
       </div>
       <div class="step reveal">
         <div class="step-n">2</div>
@@ -792,7 +754,7 @@
   <div class="final-card reveal">
     <h2>Ready to work faster?</h2>
     <p>Free forever. No account. No tracking. And it's only getting better — new tools added with every update.</p>
-    <a href="https://github.com/lavenderdragondesign/lddextension" class="btn-primary" style="margin: 0 auto;">
+    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary" style="margin: 0 auto;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download Free — Works on Chrome, Edge, Brave & Opera
     </a>
@@ -810,7 +772,7 @@
     </a>
   </div>
   <div class="footer-links">
-    <a href="https://github.com/lavenderdragondesign/lddextension" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" target="_blank" rel="noopener">GitHub</a>
     <a href="https://www.etsy.com/shop/LavenderDragonDesign" target="_blank" rel="noopener">Etsy Shop</a>
     <a href="https://buymeacoffee.com/lavenderdragondesign" target="_blank" rel="noopener">Buy Me a Coffee</a>
   </div>
