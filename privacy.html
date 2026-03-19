@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — LDD MD Enhancer</title>
+  <meta name="description" content="LDD MD Enhancer collects no user data. Your prompts, settings, and preferences stay on your device — always." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #07080f;
+      --bg2:     #0d0e1a;
+      --bg3:     #12131f;
+      --bg4:     #181928;
+      --border:  rgba(255,255,255,0.06);
+      --border2: rgba(255,255,255,0.11);
+      --text:    #eceef8;
+      --muted:   #6b7094;
+      --muted2:  #9296b8;
+      --p:       #5b5ef4;
+      --p2:      #8b5cf6;
+      --p3:      #b89dff;
+      --grad:    linear-gradient(135deg, #5b5ef4 0%, #8b5cf6 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      background: rgba(7,8,15,0.85);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      color: var(--muted2);
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .nav-back:hover { border-color: var(--p); color: var(--text); }
+
+    /* ── Page layout ── */
+    .page-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+
+    /* Orb behind heading */
+    .hero-orb {
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 400px;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 0%, rgba(91,94,244,0.12) 0%, transparent 70%);
+      z-index: 0;
+    }
+
+    .page-header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 56px;
+    }
+
+    .page-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--p);
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      margin-bottom: 16px;
+    }
+
+    .page-title span {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      font-size: 16px;
+      color: var(--muted2);
+      line-height: 1.65;
+      max-width: 540px;
+    }
+
+    .updated {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 18px;
+      padding: 5px 13px;
+      background: rgba(91,94,244,0.07);
+      border: 1px solid rgba(91,94,244,0.2);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted2);
+    }
+
+    /* ── Highlight card ── */
+    .highlight-card {
+      background: linear-gradient(135deg, rgba(91,94,244,0.1) 0%, rgba(139,92,246,0.07) 100%);
+      border: 1px solid rgba(91,94,244,0.25);
+      border-radius: 18px;
+      padding: 28px 30px;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .highlight-card .hc-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .highlight-card h2 {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .highlight-card p {
+      font-size: 14px;
+      color: var(--muted2);
+      line-height: 1.7;
+    }
+
+    /* ── Sections ── */
+    .policy-body {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .policy-section {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .policy-section:hover {
+      border-color: var(--border2);
+    }
+
+    .ps-header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .ps-icon {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: rgba(91,94,244,0.1);
+      border: 1px solid rgba(91,94,244,0.18);
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+    }
+
+    .ps-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      flex: 1;
+    }
+
+    .ps-chevron {
+      color: var(--muted);
+      font-size: 13px;
+      transition: transform 0.2s;
+    }
+
+    .policy-section.open .ps-chevron {
+      transform: rotate(180deg);
+    }
+
+    .ps-body {
+      display: none;
+      padding: 0 24px 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .policy-section.open .ps-body {
+      display: block;
+    }
+
+    .ps-body p,
+    .ps-body li {
+      font-size: 13px;
+      color: var(--muted2);
+      line-height: 1.75;
+    }
+
+    .ps-body p + p { margin-top: 10px; }
+
+    .ps-body ul,
+    .ps-body ol {
+      padding-left: 4px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      list-style: none;
+    }
+
+    .ps-body li {
+      display: flex;
+      gap: 10px;
+    }
+
+    .ps-body li::before {
+      content: '→';
+      color: var(--p3);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .ps-body code {
+      background: rgba(91,94,244,0.12);
+      border: 1px solid rgba(91,94,244,0.22);
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-size: 11px;
+      color: var(--p3);
+      font-family: monospace;
+    }
+
+    .ps-body a {
+      color: var(--p3);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(184,157,255,0.3);
+      transition: border-color 0.15s;
+    }
+
+    .ps-body a:hover { border-color: var(--p3); }
+
+    /* ── Contact card ── */
+    .contact-card {
+      margin-top: 14px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .contact-card .cc-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+
+    .contact-card h3 {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .contact-card p {
+      font-size: 13px;
+      color: var(--muted2);
+      line-height: 1.65;
+    }
+
+    .contact-card a {
+      color: var(--p3);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-left { display: flex; flex-direction: column; gap: 6px; }
+
+    .footer-brand {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-by { font-size: 12px; color: var(--muted); }
+
+    .footer-links { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+    .footer-links a.active { color: var(--p3); }
+
+    .footer-legal {
+      width: 100%;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: rgba(107,112,148,0.5);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      footer { padding: 24px 20px; }
+      .page-wrap { padding-top: 96px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero-orb"></div>
+
+<nav>
+  <a href="index.html" class="nav-brand">
+    <img src="icon128.png" alt="LDD" style="width:30px;height:30px;border-radius:9px;object-fit:cover;box-shadow:0 4px 14px rgba(91,94,244,0.4);">
+    LDD MD Enhancer
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back">← Back to home</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="page-eyebrow">Legal</div>
+    <h1 class="page-title">Privacy <span>Policy</span></h1>
+    <p class="page-subtitle">LDD MD Enhancer collects no user data. Your prompts, settings, and preferences stay on your device — always. Here's exactly how that works.</p>
+    <div class="updated">📅 Last updated: March 2026</div>
+  </div>
+
+  <div class="highlight-card">
+    <div class="hc-icon">🔒</div>
+    <h2>The short version: we collect nothing.</h2>
+    <p>LDD MD Enhancer has no servers, no analytics, no accounts, and no tracking of any kind. Everything — your saved prompts, theme settings, and tool preferences — is stored locally in your own browser using <code>chrome.storage.local</code> and never leaves your device. That's it.</p>
+  </div>
+
+  <div class="policy-body">
+
+    <div class="policy-section open">
+      <div class="ps-header" onclick="this.closest('.policy-section').classList.toggle('open')">
+        <div class="ps-icon">📦</div>
+        <span class="ps-title">What data does the extension collect?</span>
+        <span class="ps-chevron">▼</span>
+      </div>
+      <div class="ps-body">
+        <p><strong style="color:var(--text)">None.</strong> LDD MD Enhancer collects absolutely no user data. Specifically, we do not collect:</p>
+        <ul>
+          <li>Personal information (name, email, account credentials)</li>
+          <li>Browsing history or page content</li>
+          <li>Keystrokes or form inputs</li>
+          <li>Usage analytics or event tracking</li>
+          <li>Device identifiers or IP addresses</li>
+          <li>Crash reports or telemetry</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <div class="ps-header" onclick="this.closest('.policy-section').classList.toggle('open')">
+        <div class="ps-icon">💾</div>
+        <span class="ps-title">What is stored and where?</span>
+        <span class="ps-chevron">▼</span>
+      </div>
+      <div class="ps-body">
+        <p>The extension stores the following data locally in your browser using <code>chrome.storage.local</code>:</p>
+        <ul>
+          <li>Your saved prompt clipboard items (names and content)</li>
+          <li>Theme preferences (colors, brightness, custom presets)</li>
+          <li>Tool toggle settings (Quick Actions Bar, Drag & Drop, etc.)</li>
+          <li>QA bar button visibility preferences</li>
+        </ul>
+        <p style="margin-top:12px">This data is stored <strong style="color:var(--text)">only on your device</strong>. It is never transmitted to any server, never synced to a cloud service, and is not accessible to anyone other than you. If you uninstall the extension, this data is deleted by the browser.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <div class="ps-header" onclick="this.closest('.policy-section').classList.toggle('open')">
+        <div class="ps-icon">🌐</div>
+        <span class="ps-title">Does the extension make any network requests?</span>
+        <span class="ps-chevron">▼</span>
+      </div>
+      <div class="ps-body">
+        <p>No external network requests are made by the extension itself. It does not communicate with any API, server, or third-party service.</p>
+        <p>The extension operates exclusively on <code>mydesigns.io</code> — this is its only declared host permission. It does not access any other website or domain.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <div class="ps-header" onclick="this.closest('.policy-section').classList.toggle('open')">
+        <div class="ps-icon">🍪</div>
+        <span class="ps-title">Cookies and tracking</span>
+        <span class="ps-chevron">▼</span>
+      </div>
+      <div class="ps-body">
+        <p>The extension does not use cookies, tracking pixels, fingerprinting techniques, or any form of cross-site tracking. No analytics libraries are loaded or executed.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <div class="ps-header" onclick="this.closest('.policy-section').classList.toggle('open')">
+        <div class="ps-icon">🔑</div>
+        <span class="ps-title">Permissions explained</span>
+        <span class="ps-chevron">▼</span>
+      </div>
+      <div class="ps-body">
+        <p>The extension requests the following browser permissions. Here's exactly why each is needed:</p>
+        <ul>
+          <li><code>storage</code> — to save your prompts, settings, and preferences locally in your browser</li>
+          <li><code>tabs</code> — to check whether the currently active tab is on mydesigns.io before enabling the extension</li>
+          <li><code>windows</code> — to open the PDF Generator and Resizer tools in a focused popup window</li>
+          <li><code>host_permissions: https://mydesigns.io/*</code> — to inject the toolbar, panel, and tools onto the MyDesigns listings page only</li>
+        </ul>
+        <p style="margin-top:12px">No broad host permissions (like <code>&lt;all_urls&gt;</code>) are requested. The extension only activates on one specific site.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <div class="ps-header" onclick="this.closest('.policy-section').classList.toggle('open')">
+        <div class="ps-icon">👶</div>
+        <span class="ps-title">Children's privacy</span>
+        <span class="ps-chevron">▼</span>
+      </div>
+      <div class="ps-body">
+        <p>Since we collect no data whatsoever from any user, this extension inherently complies with children's privacy regulations including COPPA. We do not knowingly collect information from anyone of any age.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <div class="ps-header" onclick="this.closest('.policy-section').classList.toggle('open')">
+        <div class="ps-icon">⚖️</div>
+        <span class="ps-title">Liability disclaimer</span>
+        <span class="ps-chevron">▼</span>
+      </div>
+      <div class="ps-body">
+        <p>LDD MD Enhancer is provided "as is" without warranty of any kind, express or implied. LavenderDragonDesign shall not be held liable for any direct, indirect, incidental, or consequential damages arising from the use or inability to use this extension, including but not limited to loss of data, loss of profits, or business interruption.</p>
+        <p>Use of this extension is entirely at your own risk. LDD reserves the right to modify or discontinue the extension at any time without notice.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <div class="ps-header" onclick="this.closest('.policy-section').classList.toggle('open')">
+        <div class="ps-icon">™️</div>
+        <span class="ps-title">Trademarks &amp; affiliation</span>
+        <span class="ps-chevron">▼</span>
+      </div>
+      <div class="ps-body">
+        <p>MyDesigns® is a registered trademark of its respective owner. LDD MD Enhancer is an independent tool and is not affiliated with, endorsed by, or sponsored by MyDesigns or its parent company.</p>
+        <p>The LDD Enhancer extension, including its source code, design, and original content, is Copyright © LavenderDragonDesign. All rights reserved.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <div class="ps-header" onclick="this.closest('.policy-section').classList.toggle('open')">
+        <div class="ps-icon">🔄</div>
+        <span class="ps-title">Changes to this policy</span>
+        <span class="ps-chevron">▼</span>
+      </div>
+      <div class="ps-body">
+        <p>If this policy ever changes, the updated version will be posted here with a revised date at the top of the page. Since no data is collected, no meaningful change to data practices is anticipated — but we'll keep this page accurate regardless.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="contact-card">
+    <div class="cc-icon">💬</div>
+    <div>
+      <h3>Questions?</h3>
+      <p>If you have any questions about this privacy policy or how the extension works, you can reach out through the <a href="https://github.com/lavenderdragondesign/lddextension" target="_blank" rel="noopener">GitHub repository</a>, the <a href="https://www.etsy.com/shop/LavenderDragonDesign" target="_blank" rel="noopener">Etsy shop</a>, or via <a href="https://buymeacoffee.com/lavenderdragondesign" target="_blank" rel="noopener">Buy Me a Coffee</a>.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">
+    <span class="footer-brand">LDD MD Enhancer</span>
+    <span class="footer-by">By LavenderDragonDesign · Free Chrome Extension</span>
+    <span style="font-size:11px;color:rgba(107,112,148,0.6);margin-top:2px;">Dev. By Andrea — Made With ❤️</span>
+    <a href="https://buymeacoffee.com/lavenderdragondesign" target="_blank" rel="noopener" style="margin-top:10px;">
+      <img src="bmac.png" alt="Buy Me a Coffee" style="height:44px;border-radius:10px;">
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="privacy.html" class="active">Privacy Policy</a>
+    <a href="https://github.com/lavenderdragondesign/lddextension" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.etsy.com/shop/LavenderDragonDesign" target="_blank" rel="noopener">Etsy Shop</a>
+    <a href="https://buymeacoffee.com/lavenderdragondesign" target="_blank" rel="noopener">Buy Me a Coffee</a>
+  </div>
+  <p class="footer-legal">MyDesigns® is a registered trademark of its respective owner. LDD MD Enhancer is an independent tool and is not affiliated with, endorsed by, or sponsored by MyDesigns or its parent company. All MyDesigns trademarks, logos, service marks, and trade names are the sole property of their respective owners.</p>
+</footer>
+
+</body>
+</html>
