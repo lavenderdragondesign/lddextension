@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LDD MD Enhancer — The MD Toolkit, Rebuilt.</title>
+  <meta name="description" content="The LDD MD Enhancer is back — rebuilt from scratch with more tools, better performance, and a Canva-style PDF builder. Coming soon to the Chrome Web Store." />
+  <meta property="og:title" content="LDD MD Enhancer — The MD Toolkit, Rebuilt." />
+  <meta property="og:description" content="It's back. Rebuilt from the ground up. Quick Actions, Drag & Drop, Profit Calculator, Branded PDF Builder and more — all free." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #07080f;
+      --bg2:      #0d0e1a;
+      --bg3:      #12131f;
+      --bg4:      #181928;
+      --border:   rgba(255,255,255,0.06);
+      --border2:  rgba(255,255,255,0.11);
+      --text:     #eceef8;
+      --muted:    #6b7094;
+      --muted2:   #9296b8;
+      --p:        #5b5ef4;
+      --p2:       #8b5cf6;
+      --p3:       #b89dff;
+      --grad:     linear-gradient(135deg, #5b5ef4 0%, #8b5cf6 100%);
+      --glow:     rgba(91,94,244,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 60px;
+      background: rgba(7,8,15,0.8);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 800; font-size: 15px; letter-spacing: -0.02em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-icon {
+      width: 30px; height: 30px; border-radius: 9px;
+      background: var(--grad); display: grid; place-items: center;
+      font-size: 15px; box-shadow: 0 4px 14px rgba(91,94,244,0.4);
+    }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-wip {
+      font-size: 11px; font-weight: 500; color: var(--p3);
+      letter-spacing: 0.04em;
+      background: rgba(91,94,244,0.1);
+      border: 1px solid rgba(91,94,244,0.25);
+      border-radius: 999px; padding: 4px 11px;
+    }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px; background: var(--bg3);
+      border: 1px solid var(--border2);
+      color: var(--muted2); font-size: 13px; font-weight: 500;
+      border-radius: 999px; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { border-color: var(--p); color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+    }
+    .hero-orb {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 20%, rgba(91,94,244,0.16) 0%, rgba(139,92,246,0.08) 40%, transparent 70%);
+    }
+
+    .returning-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 16px;
+      background: rgba(91,94,244,0.08);
+      border: 1px solid rgba(91,94,244,0.3);
+      border-radius: 999px; margin-bottom: 32px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .badge-text {
+      font-size: 12px; font-weight: 500; color: var(--p3);
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 0.95;
+      margin-bottom: 10px;
+      animation: fadeUp 0.5s 0.08s ease both;
+    }
+    .h1-accent {
+      display: block;
+      background: var(--grad);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      padding-bottom: 0.12em;
+    }
+    .h1-sub-line {
+      display: block;
+      font-size: clamp(14px, 2vw, 19px);
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 400; font-style: italic;
+      color: var(--muted2); letter-spacing: -0.01em;
+      margin-top: 16px; -webkit-text-fill-color: var(--muted2);
+      animation: fadeUp 0.5s 0.16s ease both;
+    }
+
+    .hero-desc {
+      max-width: 500px;
+      font-size: 16px; color: var(--muted); line-height: 1.7;
+      margin: 28px 0 36px;
+      animation: fadeUp 0.5s 0.22s ease both;
+    }
+
+    .hero-ctas {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.5s 0.28s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 14px 30px; background: var(--grad); color: #fff;
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 800; font-size: 15px;
+      border-radius: 14px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(91,94,244,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(91,94,244,0.45); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 26px; border: 1px solid var(--border2);
+      color: var(--muted2); font-size: 14px; font-weight: 500;
+      border-radius: 14px; text-decoration: none;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .btn-ghost:hover { border-color: rgba(91,94,244,0.4); color: var(--text); background: rgba(91,94,244,0.06); }
+
+    .hero-footnote {
+      margin-top: 20px; font-size: 12px; color: var(--muted);
+      animation: fadeUp 0.5s 0.34s ease both;
+    }
+
+    /* ── MOCKUP ── */
+    .mockup-wrap {
+      margin-top: 72px; position: relative;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .mockup-halo {
+      position: absolute; inset: -60px;
+      background: radial-gradient(ellipse, rgba(91,94,244,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .mockup {
+      position: relative; width: min(740px, 94vw);
+      background: var(--bg3); border: 1px solid var(--border2);
+      border-radius: 22px; overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(91,94,244,0.08);
+    }
+    .mockup-topbar {
+      height: 44px; background: var(--bg2); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; padding: 0 18px; gap: 8px;
+    }
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .d-r { background: #ff5f57; } .d-y { background: #ffbd2e; } .d-g { background: #28ca42; }
+    .mockup-title { margin: 0 auto; font-size: 12px; color: var(--muted); font-family: 'Cabinet Grotesk', sans-serif; font-weight: 600; }
+    .mockup-qa {
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 10px 18px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+    }
+    .qa-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+    .qc {
+      padding: 4px 11px; border-radius: 7px; font-size: 11px; font-weight: 600;
+      background: var(--bg4); border: 1px solid var(--border2); color: var(--muted2);
+    }
+    .qc.hi { background: rgba(91,94,244,0.14); border-color: rgba(91,94,244,0.35); color: var(--p3); }
+    .qc.cta { background: var(--grad); border-color: transparent; color: #fff; }
+    .q-div { color: rgba(255,255,255,0.12); }
+    .mockup-body { display: flex; min-height: 220px; }
+    .mockup-sidebar {
+      width: 48px; background: var(--bg2); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 5px;
+    }
+    .m-icon {
+      width: 34px; height: 34px; border-radius: 9px;
+      display: grid; place-items: center; font-size: 14px; cursor: default;
+    }
+    .m-icon.on { background: rgba(91,94,244,0.2); box-shadow: inset 0 0 0 1px rgba(91,94,244,0.4); }
+    .mockup-content { flex: 1; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .m-label { font-family: 'Cabinet Grotesk', sans-serif; font-size: 13px; font-weight: 700; }
+    .m-ta { height: 72px; border-radius: 8px; background: var(--bg2); border: 1px solid rgba(91,94,244,0.22); }
+    .m-bar { height: 7px; border-radius: 99px; background: var(--border2); }
+    .m-bar.c { background: rgba(91,94,244,0.2); width: 50%; }
+    .m-bar.b { width: 72%; }
+    .m-btn {
+      align-self: flex-start; padding: 6px 14px; border-radius: 7px;
+      background: var(--grad); font-size: 11px;
+      font-family: 'Cabinet Grotesk', sans-serif; font-weight: 800; color: #fff;
+    }
+
+    /* ── COMING SOON STRIP ── */
+    .store-strip { max-width: 780px; margin: 0 auto; padding: 0 24px 80px; }
+    .store-card {
+      background: var(--bg3); border: 1px solid rgba(91,94,244,0.25);
+      border-radius: 18px; padding: 28px 32px;
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    }
+    .store-icon { font-size: 36px; flex-shrink: 0; }
+    .store-text { flex: 1; min-width: 200px; }
+    .store-text h3 {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-weight: 800; font-size: 17px; letter-spacing: -0.02em; margin-bottom: 5px;
+    }
+    .store-text p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .store-status {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 16px;
+      background: rgba(91,94,244,0.1); border: 1px solid rgba(91,94,244,0.3);
+      border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--p3);
+      white-space: nowrap;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--p3); box-shadow: 0 0 8px var(--p3);
+      animation: pulse 2s infinite;
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { position: relative; z-index: 1; }
+    .section-wrap { max-width: 1120px; margin: 0 auto; padding: 80px 24px; }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--p); margin-bottom: 12px;
+    }
+    .section-h {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(30px, 4.5vw, 50px);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 14px;
+    }
+    .section-p {
+      font-size: 15px; color: var(--muted); line-height: 1.7;
+      max-width: 440px; margin-bottom: 52px;
+    }
+
+    /* ── TOOLS ── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .tool-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 16px; padding: 26px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .tool-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: var(--grad); opacity: 0; transition: opacity 0.3s;
+    }
+    .tool-card:hover {
+      border-color: rgba(91,94,244,0.28); transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.28);
+    }
+    .tool-card:hover::after { opacity: 1; }
+    .tool-card.featured {
+      background: linear-gradient(145deg, var(--bg3) 0%, rgba(91,94,244,0.07) 100%);
+      border-color: rgba(91,94,244,0.2); grid-column: span 2;
+    }
+    @media (max-width: 640px) { .tool-card.featured { grid-column: span 1; } }
+    .tool-em {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(91,94,244,0.1); border: 1px solid rgba(91,94,244,0.2);
+      display: grid; place-items: center; font-size: 20px; margin-bottom: 16px;
+    }
+    .tool-name {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 15px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 7px;
+    }
+    .tool-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .tool-tag {
+      display: inline-block; margin-top: 10px;
+      padding: 3px 9px; border-radius: 6px;
+      background: rgba(91,94,244,0.1); border: 1px solid rgba(91,94,244,0.22);
+      font-size: 11px; font-weight: 600; color: var(--p3);
+    }
+
+    /* ── PDF SPOTLIGHT ── */
+    .pdf-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    @media (max-width: 780px) { .pdf-inner { grid-template-columns: 1fr; } }
+    .pdf-mockup {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+    .pdf-topbar {
+      background: var(--bg3); border-bottom: 1px solid var(--border);
+      padding: 10px 14px; display: flex; gap: 6px; align-items: center;
+    }
+    .pdf-title { font-family: 'Cabinet Grotesk', sans-serif; font-size: 11px; font-weight: 700; color: var(--muted); margin-left: 4px; }
+    .pdf-tb-btn {
+      padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600;
+      background: var(--bg4); border: 1px solid var(--border2); color: var(--muted2);
+    }
+    .pdf-tb-btn.accent { background: rgba(91,94,244,0.15); border-color: rgba(91,94,244,0.3); color: var(--p3); }
+    .pdf-canvas-area { display: flex; height: 180px; }
+    .pdf-layers { width: 90px; background: var(--bg3); border-right: 1px solid var(--border); padding: 8px; }
+    .pdf-layer-head { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px; }
+    .pdf-layer-item { padding: 5px 7px; border-radius: 6px; font-size: 10px; color: var(--muted2); margin-bottom: 3px; }
+    .pdf-layer-item.sel { background: rgba(91,94,244,0.15); color: var(--p3); }
+    .pdf-canvas { flex: 1; background: #1a1c2e; display: flex; align-items: center; justify-content: center; }
+    .pdf-page {
+      width: 80px; height: 110px; background: #fff; border-radius: 3px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      display: flex; flex-direction: column; padding: 8px; gap: 4px;
+    }
+    .pp-bar { height: 5px; border-radius: 3px; background: #e2e8f0; }
+    .pp-bar.accent { background: #6366f1; width: 60%; }
+    .pp-bar.thin { height: 3px; }
+    .pp-img { flex: 1; background: #e2e8f0; border-radius: 3px; margin: 2px 0; }
+    .pdf-props { width: 80px; background: var(--bg3); border-left: 1px solid var(--border); padding: 8px; }
+    .pdf-prop-head { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px; }
+    .pdf-prop-row { display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px; }
+    .pdf-prop-label { font-size: 9px; color: var(--muted); }
+    .pdf-prop-val { height: 16px; background: var(--bg4); border-radius: 4px; border: 1px solid var(--border); }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .check-list li { font-size: 13px; color: var(--muted2); display: flex; gap: 10px; align-items: flex-start; }
+    .check-list li span.tick { color: var(--p3); flex-shrink: 0; }
+
+    /* ── STEPS ── */
+    .steps-section { background: linear-gradient(180deg, transparent, rgba(91,94,244,0.03) 50%, transparent); }
+    .steps-inner { max-width: 900px; margin: 0 auto; padding: 80px 24px; text-align: center; }
+    .steps-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; margin-top: 52px; text-align: left;
+    }
+    .step { background: var(--bg3); border: 1px solid var(--border); border-radius: 18px; padding: 28px; }
+    .step-n {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--grad); display: grid; place-items: center;
+      font-family: 'Cabinet Grotesk', sans-serif; font-weight: 900; font-size: 14px; color: #fff;
+      margin-bottom: 16px; box-shadow: 0 4px 14px rgba(91,94,244,0.4);
+    }
+    .step h3 { font-family: 'Cabinet Grotesk', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .step p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    code {
+      background: rgba(91,94,244,0.12); border: 1px solid rgba(91,94,244,0.22);
+      border-radius: 5px; padding: 1px 6px; font-size: 11px; color: var(--p3); font-family: monospace;
+    }
+
+    /* ── FINAL CTA ── */
+    .final-cta { padding: 80px 24px; text-align: center; }
+    .final-card {
+      max-width: 620px; margin: 0 auto;
+      background: var(--bg3); border: 1px solid rgba(91,94,244,0.2);
+      border-radius: 28px; padding: 56px 40px;
+      position: relative; overflow: hidden;
+      box-shadow: 0 0 80px rgba(91,94,244,0.1);
+    }
+    .final-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% -10%, rgba(91,94,244,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .final-card h2 {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(26px, 4vw, 38px); font-weight: 900;
+      letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 12px;
+    }
+    .final-card p { font-size: 14px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex; align-items: flex-start;
+      justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    }
+    .footer-left { display: flex; flex-direction: column; gap: 6px; }
+    .footer-brand { font-family: 'Cabinet Grotesk', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: -0.02em; }
+    .footer-by { font-size: 12px; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-legal {
+      width: 100%; padding-top: 12px; border-top: 1px solid var(--border);
+      font-size: 11px; color: rgba(107,112,148,0.5); line-height: 1.6;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .nav-wip { display: none; }
+      footer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-brand">
+    <img src="https://raw.githubusercontent.com/lavenderdragondesign/lddextension/main/logo.jpg" alt="LDD" style="width:30px;height:30px;border-radius:9px;object-fit:cover;box-shadow:0 4px 14px rgba(91,94,244,0.4);">
+    LDD MD Enhancer
+  </a>
+  <div class="nav-right">
+    <span class="nav-wip">🔨 In active development</span>
+    <a href="https://github.com/lavenderdragondesign/lddextension" class="nav-cta" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb"></div>
+
+  <div class="returning-badge">
+    <span>🔁</span>
+    <span class="badge-text">It's back &mdash; rebuilt from scratch &mdash; better than ever</span>
+  </div>
+
+  <h1>
+    The MD toolkit<br>
+    <span class="h1-accent">redone right.</span>
+  </h1>
+  <span class="h1-sub-line">— everything you loved, nothing you didn't, and tools you never knew you needed.</span>
+
+  <p class="hero-desc">
+    A free Chrome extension that supercharges your MD workflow — Quick Actions, Drag &amp; Drop Upload, Profit Calculator, Branded PDF Builder, and more. In active development and growing.
+  </p>
+
+  <div class="hero-ctas">
+    <a href="https://github.com/lavenderdragondesign/lddextension" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download Extension — Free
+    </a>
+    <a href="#install" class="btn-ghost">How to install ↓</a>
+  </div>
+
+  <p class="hero-footnote">Free forever · No account · Works on Chrome, Edge, Brave &amp; Opera · CWS listing coming soon</p>
+
+  <div class="mockup-wrap">
+    <div class="mockup-halo"></div>
+    <div class="mockup">
+      <div class="mockup-topbar">
+        <span class="dot d-r"></span><span class="dot d-y"></span><span class="dot d-g"></span>
+        <span class="mockup-title">mydesigns.io/app/listings</span>
+      </div>
+      <div class="mockup-qa">
+        <span class="qa-label">LDD</span>
+        <span class="qc">Image Mockups</span>
+        <span class="qc">Video Mockups</span>
+        <span class="qc hi">Vision AI</span>
+        <span class="qc">Remove BG</span>
+        <span class="qc">Upscale</span>
+        <span class="qc">Vectorize</span>
+        <span class="qc">Canvas</span>
+        <span class="qc">Dream AI</span>
+        <span class="qc">Color Overlay</span>
+        <span class="qc">Edit in Bulk</span>
+        <span class="q-div">|</span>
+        <span class="qc">Compressor</span>
+        <span class="qc">Resizer</span>
+        <span class="qc hi cta">Open MD Enhancer</span>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-sidebar">
+          <div class="m-icon on">✨</div>
+          <div class="m-icon">🔎</div>
+          <div class="m-icon">$</div>
+          <div class="m-icon">📋</div>
+          <div class="m-icon">🎨</div>
+          <div class="m-icon">⇗</div>
+          <div class="m-icon">🗜️</div>
+          <div class="m-icon">📄</div>
+        </div>
+        <div class="mockup-content">
+          <div class="m-label">✨ Custom Instructions</div>
+          <div class="m-ta"></div>
+          <div class="m-bar c"></div>
+          <div class="m-bar b"></div>
+          <div class="m-bar" style="width:100%;opacity:0.4"></div>
+          <div class="m-btn">Paste to MD →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHROME STORE STRIP -->
+<div class="store-strip">
+  <div class="store-card reveal">
+    <div class="store-icon">🏪</div>
+    <div class="store-text">
+      <h3>Chrome Web Store — Coming Soon</h3>
+      <p>The extension is being submitted to the Chrome Web Store. For now, install directly via GitHub in under a minute.</p>
+    </div>
+    <div class="store-status">
+      <span class="status-dot"></span>
+      Being submitted
+    </div>
+  </div>
+</div>
+
+<!-- ALL TOOLS -->
+<section id="tools">
+  <div class="section-wrap">
+    <div class="reveal">
+      <div class="section-eyebrow">The full toolkit</div>
+      <h2 class="section-h">More tools.<br>Still growing.</h2>
+      <p class="section-p">Built for MD designers who want to move faster. Every tool lives right in the page — no new tabs, no friction. And new ones keep coming.</p>
+    </div>
+
+    <div class="tools-grid">
+      <div class="tool-card featured reveal">
+        <div class="tool-em">📄</div>
+        <div class="tool-name">Branded PDF Builder</div>
+        <div class="tool-desc">
+          A Canva-style branded PDF builder that extracts the download link from your MD listing's original PDF and embeds it into a custom button on your output — so customers click through directly. Design your layout, add your branding, and export a polished PDF with the original file link already baked in.
+        </div>
+        <span class="tool-tag">✦ Flagship feature</span>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">✨</div>
+        <div class="tool-name">Custom Instructions</div>
+        <div class="tool-desc">Save your AI prompts and paste them directly into MD Vision AI with one click. Build a personal library of your best templates.</div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">⚡</div>
+        <div class="tool-name">Quick Actions Bar</div>
+        <div class="tool-desc">One-click access to Image Mockups, Video Mockups, Vision AI, Remove BG, Upscale, Vectorize, Canvas, Dream AI, Color Overlay, and Edit in Bulk — overlaid right on the MD toolbar.</div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">🗂️</div>
+        <div class="tool-name">Drag & Drop Upload</div>
+        <div class="tool-desc">Drop files straight onto your listings. No more hunting through file dialogs for every single upload.</div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">$</div>
+        <div class="tool-name">Profit Calculator</div>
+        <div class="tool-desc">Know your margins before you publish. Factor in Etsy fees, shipping, ad spend, and discounts all at once.</div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">📋</div>
+        <div class="tool-name">Prompt Clipboard</div>
+        <div class="tool-desc">A persistent, searchable clipboard for your most-used text snippets. Paste anything in one click, survives across sessions.</div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">🔎</div>
+        <div class="tool-name">Keyword Tools</div>
+        <div class="tool-desc">Generate, refine, and manage keyword lists for your listings without ever leaving the MD page.</div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">⇗</div>
+        <div class="tool-name">Quick Resizer</div>
+        <div class="tool-desc">Resize images to common print-on-demand dimensions instantly — opens in a focused popup window, no new tab needed.</div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">🗜️</div>
+        <div class="tool-name">Image Compressor</div>
+        <div class="tool-desc">Compress PNG files without leaving MD. Smaller files, faster uploads, no noticeable quality loss.</div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">🤖</div>
+        <div class="tool-name">Vision AI Presets</div>
+        <div class="tool-desc">One-click product type chips inside the Vision AI modal — PNG, SVG, Tumbler Wrap, Mug Wrap — no typing, no digging.</div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-em">🎨</div>
+        <div class="tool-name">Custom Themes</div>
+        <div class="tool-desc">Apply gradient or solid color themes across the entire MD app interface. Fully customizable with preset and custom color options.</div>
+      </div>
+
+      <div class="tool-card reveal" style="border-style: dashed; border-color: rgba(91,94,244,0.18);">
+        <div class="tool-em" style="background: transparent; border-color: rgba(91,94,244,0.1);">＋</div>
+        <div class="tool-name" style="color: var(--muted);">More in progress</div>
+        <div class="tool-desc">Actively in development. New tools are being added with each update — this list is growing.</div>
+        <span class="tool-tag">In development</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PDF SPOTLIGHT -->
+<section>
+  <div class="section-wrap">
+    <div class="pdf-inner">
+      <div class="reveal">
+        <div class="section-eyebrow">Flagship feature</div>
+        <h2 class="section-h">Canva-style<br>PDF builder.</h2>
+        <p class="section-p" style="margin-bottom: 24px;">PDF Gen reads the download link from your MD listing's original PDF and embeds it as a button inside your custom-branded output. Design your layout, apply your branding, and export — with the original file link already embedded for customers to access directly.</p>
+        <ul class="check-list">
+          <li><span class="tick">✓</span> Drag-and-drop layer editor</li>
+          <li><span class="tick">✓</span> Extracts download link from your MD listing's original PDF</li>
+          <li><span class="tick">✓</span> Embeds that link as a button inside your branded output</li>
+          <li><span class="tick">✓</span> Add logos, text, images, and shapes</li>
+          <li><span class="tick">✓</span> Export to PDF, PNG, or ZIP</li>
+          <li><span class="tick">✓</span> Custom page sizes and layouts</li>
+          <li><span class="tick">✓</span> Fully browser-based — no upload, no server</li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="pdf-mockup">
+          <div class="pdf-topbar">
+            <span class="dot d-r"></span><span class="dot d-y"></span><span class="dot d-g"></span>
+            <span class="pdf-title">LDD PDF Generator</span>
+            <div style="margin-left: auto; display: flex; gap: 4px;">
+              <span class="pdf-tb-btn">Extract PDF</span>
+              <span class="pdf-tb-btn">Add Layer</span>
+              <span class="pdf-tb-btn accent">Export →</span>
+            </div>
+          </div>
+          <div class="pdf-canvas-area">
+            <div class="pdf-layers">
+              <div class="pdf-layer-head">Layers</div>
+              <div class="pdf-layer-item sel">📄 Background</div>
+              <div class="pdf-layer-item">🖼 Logo</div>
+              <div class="pdf-layer-item">T Title</div>
+              <div class="pdf-layer-item">⬜ Shape</div>
+              <div class="pdf-layer-item">T Body text</div>
+            </div>
+            <div class="pdf-canvas">
+              <div class="pdf-page">
+                <div class="pp-bar accent"></div>
+                <div class="pp-bar thin"></div>
+                <div class="pp-img"></div>
+                <div class="pp-bar thin"></div>
+                <div class="pp-bar thin" style="width:80%"></div>
+                <div class="pp-bar thin" style="width:65%"></div>
+              </div>
+            </div>
+            <div class="pdf-props">
+              <div class="pdf-prop-head">Props</div>
+              <div class="pdf-prop-row">
+                <div class="pdf-prop-label">X / Y</div>
+                <div class="pdf-prop-val"></div>
+              </div>
+              <div class="pdf-prop-row">
+                <div class="pdf-prop-label">W / H</div>
+                <div class="pdf-prop-val"></div>
+              </div>
+              <div class="pdf-prop-row">
+                <div class="pdf-prop-label">Color</div>
+                <div class="pdf-prop-val" style="background: rgba(91,94,244,0.3);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO INSTALL -->
+<section class="steps-section">
+  <div class="steps-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Get started</div>
+      <h2 class="section-h">Install in under a minute.</h2>
+      <p class="section-p" style="margin: 12px auto 0; text-align: center; max-width: 360px;">No account, no setup. Until the Chrome Web Store listing is live, install directly from GitHub.</p>
+    </div>
+    <div class="steps-row" id="install">
+      <div class="step reveal">
+        <div class="step-n">1</div>
+        <h3>Download the extension</h3>
+        <p>Click the download button above or <a href="https://github.com/lavenderdragondesign/lddextension" style="color:var(--p3);">download directly here</a>. Extract the ZIP somewhere permanent — don't delete the folder afterwards.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">2</div>
+        <h3>Open Extensions</h3>
+        <p>In Chrome, Edge, Brave, or Opera go to <code>Manage Extensions</code> and enable <code>Developer Mode</code> (top right toggle).</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">3</div>
+        <h3>Load unpacked</h3>
+        <p>Click <code>Load Unpacked</code> (top left) and select the extracted extension folder.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">4a</div>
+        <h3>Pin it</h3>
+        <p>Click the 🧩 puzzle icon in your browser toolbar, find <code>LDD MD Enhancer</code>, and hit the 📌 pin icon.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">5</div>
+        <h3>Open MD and go</h3>
+        <p>Navigate to <code>mydesigns.io/app/listings</code> and look for the LDD logo in the bottom right corner. Click it to open the enhancer.</p>
+      </div>
+    </div>  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-card reveal">
+    <h2>Ready to work faster?</h2>
+    <p>Free forever. No account. No tracking. And it's only getting better — new tools added with every update.</p>
+    <a href="https://github.com/lavenderdragondesign/lddextension" class="btn-primary" style="margin: 0 auto;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download Free — Works on Chrome, Edge, Brave & Opera
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <span class="footer-brand">LDD MD Enhancer</span>
+    <span class="footer-by">By LavenderDragonDesign · Free Chrome Extension · In Active Development</span>
+    <span style="font-size:11px;color:rgba(107,112,148,0.6);margin-top:2px;">Dev. By Andrea — Made With ❤️</span>
+    <a href="https://buymeacoffee.com/lavenderdragondesign" target="_blank" rel="noopener" style="margin-top:10px;">
+      <img src="bmac.png" alt="Buy Me a Coffee" style="height:44px;border-radius:10px;">
+    </a>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/lavenderdragondesign/lddextension" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.etsy.com/shop/LavenderDragonDesign" target="_blank" rel="noopener">Etsy Shop</a>
+    <a href="https://buymeacoffee.com/lavenderdragondesign" target="_blank" rel="noopener">Buy Me a Coffee</a>
+  </div>
+  <p class="footer-legal">MyDesigns® is a registered trademark of its respective owner. LDD MD Enhancer is an independent tool and is not affiliated with, endorsed by, or sponsored by MyDesigns or its parent company. All MyDesigns trademarks, logos, service marks, and trade names are the sole property of their respective owners.</p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 60);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.querySelectorAll('.m-icon').forEach(icon => {
+    icon.addEventListener('mouseenter', () => {
+      document.querySelectorAll('.m-icon').forEach(i => i.classList.remove('on'));
+      icon.classList.add('on');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+# GitHub Pages config — tells Jekyll to serve plain HTML without processing it
+exclude:
+  - README.md
