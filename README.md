@@ -118,8 +118,9 @@ Until Chrome Web Store approval:
 2. Extract it somewhere permanent  
 3. Open `Manage Extensions`  
 4. Enable **Developer Mode**  
-5. Click **Load Unpacked**  
-6. Select the folder  
+5. Click **Load Unpacked**
+6. Pin to toolbar
+7. Select the folder  
 
 Open MyDesigns → click the LDD icon → done.
 
