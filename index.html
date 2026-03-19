@@ -100,6 +100,39 @@
       background: radial-gradient(ellipse at 50% 20%, rgba(91,94,244,0.16) 0%, rgba(139,92,246,0.08) 40%, transparent 70%);
     }
 
+    .hero-logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
+      animation: fadeUp 0.5s ease both;
+    }
+    .hero-logo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 180px;
+      height: 180px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139,92,246,0.28) 0%, rgba(91,94,244,0.18) 35%, rgba(91,94,244,0.07) 55%, transparent 72%);
+      filter: blur(12px);
+      animation: heroPulse 3.6s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-logo {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 24px;
+      position: relative;
+      z-index: 1;
+      box-shadow:
+        0 18px 50px rgba(0,0,0,0.45),
+        0 0 40px rgba(91,94,244,0.25);
+    }
+
     .returning-badge {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 7px 16px;
@@ -432,6 +465,10 @@
       to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    @keyframes heroPulse {
+      0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.96); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+    }
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
@@ -446,7 +483,7 @@
 
 <nav>
   <a href="#" class="nav-brand">
-    <img src="https://raw.githubusercontent.com/lavenderdragondesign/lddextension/main/logo.jpg" alt="LDD" style="width:30px;height:30px;border-radius:9px;object-fit:cover;box-shadow:0 4px 14px rgba(91,94,244,0.4);">
+    <img src="icon128.png" alt="LDD" style="width:30px;height:30px;border-radius:9px;object-fit:cover;box-shadow:0 4px 14px rgba(91,94,244,0.4);">
     LDD MD Enhancer
   </a>
   <div class="nav-right">
@@ -461,6 +498,10 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-orb"></div>
+
+  <div class="hero-logo-wrap">
+    <img src="icon128.png" alt="LDD Logo" class="hero-logo">
+  </div>
 
   <div class="returning-badge">
     <span>🔁</span>
@@ -478,7 +519,7 @@
   </p>
 
   <div class="hero-ctas">
-    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary">
+    <a href="https://github.com/lavenderdragondesign/lddextension" class="btn-primary">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download Extension — Free
     </a>
@@ -618,6 +659,12 @@
       </div>
 
       <div class="tool-card reveal">
+        <div class="tool-em">🤖</div>
+        <div class="tool-name">Vision AI Presets</div>
+        <div class="tool-desc">One-click product type chips inside the Vision AI modal — PNG, SVG, Tumbler Wrap, Mug Wrap — no typing, no digging.</div>
+      </div>
+
+      <div class="tool-card reveal">
         <div class="tool-em">🎨</div>
         <div class="tool-name">Custom Themes</div>
         <div class="tool-desc">Apply gradient or solid color themes across the entire MD app interface. Fully customizable with preset and custom color options.</div>
@@ -646,7 +693,7 @@
           <li><span class="tick">✓</span> Extracts download link from your MD listing's original PDF</li>
           <li><span class="tick">✓</span> Embeds that link as a button inside your branded output</li>
           <li><span class="tick">✓</span> Add logos, text, images, and shapes</li>
-          <li><span class="tick">✓</span> Export to PDF</li>
+          <li><span class="tick">✓</span> Export to PDF, PNG, or ZIP</li>
           <li><span class="tick">✓</span> Custom page sizes and layouts</li>
           <li><span class="tick">✓</span> Fully browser-based — no upload, no server</li>
         </ul>
@@ -715,7 +762,7 @@
       <div class="step reveal">
         <div class="step-n">1</div>
         <h3>Download the extension</h3>
-        <p>Click the download button above or <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" style="color:var(--p3);">download directly here</a>. Extract the ZIP somewhere permanent — don't delete the folder afterwards.</p>
+        <p>Click the download button above or <a href="https://github.com/lavenderdragondesign/lddextension" style="color:var(--p3);">download directly here</a>. Extract the ZIP somewhere permanent — don't delete the folder afterwards.</p>
       </div>
       <div class="step reveal">
         <div class="step-n">2</div>
@@ -745,7 +792,7 @@
   <div class="final-card reveal">
     <h2>Ready to work faster?</h2>
     <p>Free forever. No account. No tracking. And it's only getting better — new tools added with every update.</p>
-    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary" style="margin: 0 auto;">
+    <a href="https://github.com/lavenderdragondesign/lddextension" class="btn-primary" style="margin: 0 auto;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download Free — Works on Chrome, Edge, Brave & Opera
     </a>
