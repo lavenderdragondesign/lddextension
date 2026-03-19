@@ -1,5 +1,0 @@
-# netlify.toml — simple static site
-
-[build]
-  publish = "."
-  command = ""
