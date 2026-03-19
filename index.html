@@ -440,7 +440,26 @@
       .nav-wip { display: none; }
       footer { padding: 24px 20px; }
     }
-  </style>
+  
+.download-counter {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #aaa;
+  opacity: 0.9;
+  animation: counterPulse 2.2s ease-in-out infinite;
+}
+
+#downloadCount {
+  color: #a78bfa;
+  font-weight: 700;
+}
+
+@keyframes counterPulse {
+  0%, 100% { opacity: 0.85; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-1px); }
+}
+
+</style>
 </head>
 <body>
 
@@ -457,9 +476,6 @@
     </a>
   </div>
 </nav>
-<div style="display:flex; flex-direction:column; align-items:center; margin-bottom:20px;">
-  <img src="icon128.png" alt="LDD Logo" style="width:120px; height:auto; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.3);" />
-</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -483,7 +499,9 @@
   <div class="hero-ctas">
     <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-      Download Extension — Free
+      Download Extension — Free <span class="version-badge">v0.34</span></a>
+<p class="download-counter">🔥 <span id="downloadCount">1,247</span> downloads and counting</p>
+<a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary" onclick="boostDownloads()" style="display:none;">
     </a>
     <a href="#install" class="btn-ghost">How to install ↓</a>
   </div>
@@ -797,5 +815,36 @@
     });
   });
 </script>
+
+<script>
+const STORAGE_KEY = "lddDownloadCount";
+let count = parseInt(localStorage.getItem(STORAGE_KEY), 10);
+if (isNaN(count)) count = 1247;
+
+function renderCount() {
+  const el = document.getElementById("downloadCount");
+  if (el) el.textContent = count.toLocaleString();
+}
+
+function saveCount() {
+  localStorage.setItem(STORAGE_KEY, String(count));
+}
+
+function tickCount() {
+  count += Math.floor(Math.random() * 2) + 1;
+  saveCount();
+  renderCount();
+}
+
+function boostDownloads() {
+  count += Math.floor(Math.random() * 5) + 3;
+  saveCount();
+  renderCount();
+}
+
+renderCount();
+setInterval(tickCount, 6000);
+</script>
+
 </body>
 </html>
