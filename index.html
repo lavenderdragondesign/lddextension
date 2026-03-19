@@ -49,7 +49,6 @@
       z-index: 999;
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0;
@@ -111,7 +110,6 @@
       color: var(--text);
     }
 
-    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -311,22 +309,6 @@
       z-index: 1;
     }
 
-    .download-counter {
-      margin-top: 18px;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--muted);
-      opacity: 0.95;
-      position: relative;
-      z-index: 2;
-    }
-
-    #downloadCount {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--p3);
-    }
-
     .hero-footnote {
       margin-top: 20px;
       font-size: 12px;
@@ -336,7 +318,6 @@
       z-index: 2;
     }
 
-    /* ── MOCKUP ── */
     .mockup-wrap {
       margin-top: 72px;
       position: relative;
@@ -500,7 +481,6 @@
       color: #fff;
     }
 
-    /* ── COMING SOON STRIP ── */
     .store-strip {
       max-width: 780px;
       margin: 0 auto;
@@ -565,7 +545,6 @@
       animation: pulse 2s infinite;
     }
 
-    /* ── SECTION COMMONS ── */
     section { position: relative; z-index: 1; }
 
     .section-wrap {
@@ -600,7 +579,6 @@
       margin-bottom: 52px;
     }
 
-    /* ── TOOLS ── */
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -685,7 +663,6 @@
       color: var(--p3);
     }
 
-    /* ── PDF SPOTLIGHT ── */
     .pdf-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -849,7 +826,6 @@
       flex-shrink: 0;
     }
 
-    /* ── STEPS ── */
     .steps-section {
       background: linear-gradient(180deg, transparent, rgba(91,94,244,0.03) 50%, transparent);
     }
@@ -915,7 +891,6 @@
       font-family: monospace;
     }
 
-    /* ── FINAL CTA ── */
     .final-cta {
       padding: 80px 24px;
       text-align: center;
@@ -957,7 +932,6 @@
       line-height: 1.6;
     }
 
-    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
       padding: 32px 40px;
@@ -1011,7 +985,6 @@
       line-height: 1.6;
     }
 
-    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -1108,7 +1081,7 @@
   </p>
 
   <div class="hero-ctas">
-    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary" onclick="boostDownloads()">
+    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download Extension — Free
       <span class="version-badge">v0.34</span>
@@ -1116,8 +1089,6 @@
 
     <a href="#install" class="btn-ghost">How to install ↓</a>
   </div>
-
-  <p class="download-counter">🔥 <span id="downloadCount">1,247</span> downloads and counting</p>
 
   <p class="hero-footnote">Free forever · No account · Works on Chrome, Edge, Brave &amp; Opera · CWS listing coming soon</p>
 
@@ -1206,7 +1177,7 @@
 
       <div class="tool-card reveal">
         <div class="tool-em">✨</div>
-        <div class="tool-name">Custom Instructions</div>
+        <div class="tool-name">Custom Instructions(Prompt Clipboard)</div>
         <div class="tool-desc">Save your AI prompts and paste them directly into MD Vision AI with one click. Build a personal library of your best templates.</div>
       </div>
 
@@ -1394,7 +1365,7 @@
   <div class="final-card reveal">
     <h2>Ready to work faster?</h2>
     <p>Free forever. No account. No tracking. And it's only getting better — new tools added with every update.</p>
-    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary" style="margin: 0 auto;" onclick="boostDownloads()">
+    <a href="https://github.com/lavenderdragondesign/lddextension/releases/download/v.34/LDDEnhancerv.34.zip" class="btn-primary" style="margin: 0 auto;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download Free — Works on Chrome, Edge, Brave & Opera
     </a>
@@ -1438,38 +1409,6 @@
       icon.classList.add('on');
     });
   });
-</script>
-
-<script>
-  const STORAGE_KEY = "lddDownloadCount";
-  let count = parseInt(localStorage.getItem(STORAGE_KEY), 10);
-
-  if (isNaN(count)) count = 1247;
-
-  function renderCount() {
-    const el = document.getElementById("downloadCount");
-    if (el) el.textContent = count.toLocaleString();
-  }
-
-  function saveCount() {
-    localStorage.setItem(STORAGE_KEY, String(count));
-  }
-
-  function tickCount() {
-    if (Math.random() < 0.5) return;
-    count += 1;
-    saveCount();
-    renderCount();
-  }
-
-  function boostDownloads() {
-    count += Math.floor(Math.random() * 3) + 1;
-    saveCount();
-    renderCount();
-  }
-
-  renderCount();
-  setInterval(tickCount, 600000);
 </script>
 
 </body>
