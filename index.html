@@ -442,16 +442,18 @@
     }
   
 .download-counter {
-  margin-top: 14px;
-  font-size: 13px;
-  color: #aaa;
-  opacity: 0.9;
-  animation: counterPulse 2.2s ease-in-out infinite;
+  margin-top: 18px;
+  font-size: 18px; /* bigger */
+  font-weight: 600;
+  color: var(--muted);
+  opacity: 0.95;
 }
 
 #downloadCount {
-  color: #a78bfa;
-  font-weight: 700;
+  font-size: 22px; /* main number bigger */
+  font-weight: 800;
+  color: var(--p3);
+}
 }
 
 @keyframes counterPulse {
@@ -831,7 +833,8 @@ function saveCount() {
 }
 
 function tickCount() {
-  count += Math.floor(Math.random() * 2) + 1;
+  if (Math.random() < 0.5) return; // only update 50% of the time
+  count += 1; // always +1 (more believable)
   saveCount();
   renderCount();
 }
@@ -843,7 +846,7 @@ function boostDownloads() {
 }
 
 renderCount();
-setInterval(tickCount, 6000);
+setInterval(tickCount, 60000);
 </script>
 
 </body>
