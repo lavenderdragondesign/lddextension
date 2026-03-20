@@ -9,7 +9,7 @@
 
 
 
-## LDD MD Enhancer v0.34  
+## LDD MD Enhancer v34  
 ### The MD toolkit — redone right.
 
 It’s back.
