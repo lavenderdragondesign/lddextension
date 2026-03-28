@@ -1006,7 +1006,106 @@
       }
     }
 
-    .reveal {
+    .whats-new-wrap {
+      margin-top: 48px;
+      width: min(780px, 94vw);
+      position: relative;
+      z-index: 2;
+    }
+
+    .whats-new-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--p3);
+      margin-bottom: 16px;
+    }
+
+    .wn-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    .whats-new-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .whats-new-grid { grid-template-columns: 1fr; }
+    }
+
+    .wn-card {
+      border-radius: 16px;
+      padding: 18px 20px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wn-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+
+    .wn-fix {
+      background: rgba(239,68,68,0.07);
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+
+    .wn-fix::before {
+      background: linear-gradient(90deg, #ef4444, #f97316);
+    }
+
+    .wn-new {
+      background: rgba(91,94,244,0.07);
+      border: 1px solid rgba(91,94,244,0.22);
+    }
+
+    .wn-new::before {
+      background: var(--grad);
+    }
+
+    .wn-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      opacity: 0.7;
+    }
+
+    .wn-fix .wn-tag { color: #f87171; }
+    .wn-new .wn-tag { color: var(--p3); }
+
+    .wn-title {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    .wn-desc {
+      font-size: 12px;
+      color: var(--muted2);
+      line-height: 1.55;
+    }
+
+    .wn-desc strong { color: var(--text); }
       opacity: 0;
       transform: translateY(22px);
       transition: opacity 0.6s ease, transform 0.6s ease;
@@ -1081,16 +1180,45 @@
   </p>
 
   <div class="hero-ctas">
-    <a href="https://github.com/lavenderdragondesign/lddextension/raw/main/LDDEnhancerv.34.zip" class="btn-primary">
+    <a href="https://github.com/lavenderdragondesign/lddextension/raw/main/LDDEnhancerv.35.zip" class="btn-primary">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download Extension — Free
-      <span class="version-badge">v0.34</span>
+      <span class="version-badge">v0.35</span>
     </a>
 
     <a href="#install" class="btn-ghost">How to install ↓</a>
   </div>
 
   <p class="hero-footnote">Free forever · No account · Works on Chrome, Edge, Brave &amp; Opera · CWS listing coming soon</p>
+
+  <div class="whats-new-wrap reveal">
+    <div class="whats-new-eyebrow">
+      <span class="wn-dot"></span>
+      <span>What's new in v35</span>
+    </div>
+    <div class="whats-new-grid">
+      <div class="wn-card wn-fix">
+        <div class="wn-tag">🐛 Fixed</div>
+        <div class="wn-title">Drag overlay gets stuck</div>
+        <div class="wn-desc">Dragging a downloaded image from Chrome's download bar no longer locks the upload overlay open. ✕ now properly dismisses it — no refresh needed.</div>
+      </div>
+      <div class="wn-card wn-fix">
+        <div class="wn-tag">🐛 Fixed</div>
+        <div class="wn-title">Rename panel ✕ now gives you a choice</div>
+        <div class="wn-desc">Closing the rename panel with ✕ now asks: <strong>Upload without renaming</strong> or <strong>Cancel upload</strong>. Previously it always uploaded with no way out.</div>
+      </div>
+      <div class="wn-card wn-new">
+        <div class="wn-tag">✨ New</div>
+        <div class="wn-title">New dock themes</div>
+        <div class="wn-desc">Rainbow, Midnight, Neon Pink, and Sunset — plus a Reset button and cleaner theme grouping in the selector.</div>
+      </div>
+      <div class="wn-card wn-new">
+        <div class="wn-tag">✨ New</div>
+        <div class="wn-title">Video Mockup Smart Select</div>
+        <div class="wn-desc">Quick-select buttons in the Video Mockups modal: <strong>First 10</strong>, <strong>All Filled</strong>, and <strong>Filled (Skip First)</strong> — select your slots in one click.</div>
+      </div>
+    </div>
+  </div>
 
   <div class="mockup-wrap">
     <div class="mockup-halo"></div>
@@ -1325,7 +1453,7 @@
       <div class="step reveal">
         <div class="step-n">1</div>
         <h3>Download the extension</h3>
-        <p>Click the download button above or <a href="https://github.com/lavenderdragondesign/lddextension/raw/main/LDDEnhancerv.34.zip" style="color:var(--p3);">download directly here</a>. Extract the ZIP somewhere permanent — don't delete the folder afterwards.</p>
+        <p>Click the download button above or <a href="https://github.com/lavenderdragondesign/lddextension/raw/main/LDDEnhancerv.35.zip" style="color:var(--p3);">download directly here</a>. Extract the ZIP somewhere permanent — don't delete the folder afterwards.</p>
       </div>
 
       <div class="step reveal">
@@ -1359,7 +1487,7 @@
   <div class="final-card reveal">
     <h2>Ready to work faster?</h2>
     <p>Free forever. No account. No tracking. And it's only getting better — new tools added with every update.</p>
-    <a href="https://github.com/lavenderdragondesign/lddextension/raw/main/LDDEnhancerv.34.zip" class="btn-primary" style="margin: 0 auto;">
+    <a href="https://github.com/lavenderdragondesign/lddextension/raw/main/LDDEnhancerv.35.zip" class="btn-primary" style="margin: 0 auto;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download Free — Works on Chrome, Edge, Brave & Opera
     </a>
