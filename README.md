@@ -1,70 +1,23 @@
-🚀 What’s new (v34)
+Got it, just the raw text for the What's New card — here it is, ready to paste wherever you need it:
 
-This isn’t a patch.
-This is a full rebuild + workflow upgrade.
-
-🧩 Modular Controls (NEW)
-
-You can now control each core system independently:
-
-MD Enhancer
-Dock
-Drag & Drop
-Auto Rename
-
-Toggle them from:
-
-Extension popup
-Enhancer settings panel
-
-No more all-or-nothing.
-
+🚀 What's New in v35
+This isn't a patch. This is a full rebuild + workflow upgrade.
+🧩 Modular Controls NEW
+Control each core system independently — MD Enhancer, Dock, Drag & Drop, and Auto Rename. Toggle from the extension popup or settings panel. No more all-or-nothing.
 🎯 Dock System Upgrade
-
-The dock is now a full standalone workflow tool:
-
-Bottom wake behavior improved
-Wake from:
-bottom-left corner
-bottom-right corner
-MD Enhancer bubble
-Better auto-hide + wake feedback
-Cleaner UI + theme handling
+The dock is now a full standalone workflow tool. Wake from bottom-left, bottom-right, or the MD Enhancer bubble. Improved auto-hide, better wake feedback, and cleaner theme handling.
 📦 Drag & Drop — Major Upgrade
-
-Drag & Drop is no longer just “drop and pray”:
-
-Upload directly into listings
-Works clean with MD UI
-Smarter handling + fewer misfires
-🔁 Drag & Drop Mode Toggle (NEW)
-
-You can now switch modes directly from the right side of the dock:
-
-Upload Regular
-Upload All to Single Listing
-
-No menus. No guessing.
-
-✏️ Auto Rename (NEW CONTROL)
-
-Auto Rename is now its own toggle:
-
-Turn it on/off independently
-Use Drag & Drop without rename if you want
-Cleaner workflow control
+Upload directly into listings. Works clean with the MD UI. Smarter handling and fewer misfires.
+🔁 Drag & Drop Mode Toggle NEW
+Switch between Upload Regular and Upload All to Single Listing directly from the right side of the dock. No menus. No guessing.
+✏️ Auto Rename NEW CONTROL
+Auto Rename is now its own toggle. Use Drag & Drop without rename if you want — full independent control.
 🎨 UI / UX Improvements
-White-card modal system
-Cleaner popup layout
-Better spacing + alignment
-More consistent interaction feedback
+White-card modal system, cleaner popup layout, better spacing and alignment, more consistent interaction feedback throughout.
 🧠 Foundation Rebuild
+Cleaner structure, more stable injection, better performance. This version sets the base for everything coming next.
+🐛 Fixed
 
-Under the hood:
-
-Cleaner structure
-More stable injection
-Better performance
-Ready for future tools
-
-This version sets the base for everything coming next.
+Drag overlay gets stuck — Dragging from Chrome's download bar no longer locks the overlay open. ✕ dismisses it for the whole session, and it auto-hides when the drag leaves the window.
+Rename panel ✕ now gives a choice — Closing with ✕ now asks: Upload without renaming or Cancel upload. Previously it always uploaded silently.
+"Keep names" → "Skip Rename" — Clearer label that describes what the button actually does.****
