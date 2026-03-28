@@ -1,5 +1,3 @@
-Got it, just the raw text for the What's New card — here it is, ready to paste wherever you need it:
-
 🚀 What's New in v35
 This isn't a patch. This is a full rebuild + workflow upgrade.
 🧩 Modular Controls NEW
