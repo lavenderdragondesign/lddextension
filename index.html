@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LDD MD Enhancer — Dock-First Workflow for MyDesigns.io</title>
+  <meta name="description" content="LDD MD Enhancer supercharges MyDesigns.io with a dock-first workflow, Vision AI Profiles, Prompt Manager, Dream Prompt tools, and saved Custom Instructions — all free." />
+  <link rel="icon" href="icon128.png" />
+  <meta property="og:title" content="LDD MD Enhancer — Dock-First Workflow for MyDesigns.io" />
+  <meta property="og:description" content="Free Chrome extension for MyDesigns.io with dock-first workflow, Prompt Manager, Vision AI tools, and saved Custom Instructions." />
+  <meta property="og:image" content="icon128.png" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #05050d;
+      --bg2:       #0a0a18;
+      --bg3:       #0f0f20;
+      --bg4:       #141428;
+      --border:    rgba(255,255,255,0.055);
+      --border2:   rgba(255,255,255,0.10);
+      --border3:   rgba(255,255,255,0.16);
+      --text:      #e8eaf8;
+      --muted:     #6a6d98;
+      --muted2:    #9496c0;
+      --p:         #5b5ef4;
+      --p2:        #8b5cf6;
+      --p3:        #a78bfa;
+      --amber:     #f59e0b;
+      --amber2:    #fbbf24;
+      --pink:      #e879f9;
+      --teal:      #2dd4bf;
+      --grad:      linear-gradient(135deg, #5b5ef4 0%, #8b5cf6 100%);
+      --grad-warm: linear-gradient(135deg, #f59e0b 0%, #e879f9 100%);
+      --glow:      rgba(91,94,244,0.22);
+      --glow2:     rgba(139,92,246,0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Noise overlay */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 58px;
+      background: rgba(5,5,13,0.82);
+      backdrop-filter: blur(28px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px;
+      letter-spacing: -0.02em; color: var(--text); text-decoration: none;
+    }
+    .nav-brand-icon {
+      width: 28px; height: 28px; border-radius: 8px;
+      object-fit: cover; display: block; flex: 0 0 28px;
+      box-shadow: 0 4px 14px rgba(91,94,244,0.45);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+    }
+    .nav-badge {
+      font-size: 10px; font-weight: 600; color: var(--p3);
+      background: rgba(91,94,244,0.1); border: 1px solid rgba(91,94,244,0.22);
+      border-radius: 999px; padding: 3px 9px; letter-spacing: 0.06em;
+      font-family: 'Syne', sans-serif;
+    }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .nav-link {
+      font-size: 13px; font-weight: 500; color: var(--muted2);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+    .btn-nav {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 18px; background: var(--grad);
+      color: #fff; font-family: 'Syne', sans-serif;
+      font-size: 13px; font-weight: 700; border-radius: 999px;
+      text-decoration: none; transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 6px 22px rgba(91,94,244,0.35);
+    }
+    .btn-nav:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 130px 24px 100px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-orb {
+      position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+      width: 1100px; height: 700px; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 15%, rgba(91,94,244,0.18) 0%, rgba(139,92,246,0.09) 38%, transparent 68%);
+    }
+    .hero-bg-orb2 {
+      position: absolute; bottom: -80px; right: -200px;
+      width: 600px; height: 500px; pointer-events: none;
+      background: radial-gradient(ellipse, rgba(245,158,11,0.07) 0%, transparent 65%);
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; background: rgba(91,94,244,0.08);
+      border: 1px solid rgba(91,94,244,0.28); border-radius: 999px;
+      margin-bottom: 32px; animation: fadeUp 0.5s ease both;
+      position: relative; z-index: 2;
+    }
+    .hero-eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--p3); animation: pulse 2.2s ease-in-out infinite;
+    }
+    .hero-eyebrow-text {
+      font-family: 'Syne', sans-serif; font-size: 11px;
+      font-weight: 700; color: var(--p3); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .hero-logo-wrap {
+      width: 100px; height: 100px; position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px; animation: fadeUp 0.5s 0.05s ease both;
+    }
+    .hero-logo {
+      width: 82px; height: 82px; border-radius: 20px;
+      object-fit: cover; position: relative; z-index: 2;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .hero-logo-glow {
+      position: absolute; inset: -20px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(91,94,244,0.4) 0%, rgba(139,92,246,0.2) 45%, transparent 70%);
+      filter: blur(20px); animation: logoPulse 3.5s ease-in-out infinite;
+    }
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(68px, 11vw, 136px);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 0.92;
+      position: relative; z-index: 2;
+      animation: fadeUp 0.6s 0.1s ease both;
+      margin-bottom: 8px;
+    }
+    h1 em {
+      font-style: normal;
+      background: var(--grad);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2.2vw, 20px);
+      color: var(--muted2); max-width: 560px;
+      margin: 20px auto 40px;
+      font-weight: 400; line-height: 1.65;
+      position: relative; z-index: 2;
+      animation: fadeUp 0.6s 0.18s ease both;
+    }
+    .hero-actions {
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center;
+      position: relative; z-index: 2;
+      animation: fadeUp 0.6s 0.26s ease both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 30px; background: var(--grad);
+      color: #fff; font-family: 'Syne', sans-serif;
+      font-size: 15px; font-weight: 700; border-radius: 14px;
+      text-decoration: none; transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 10px 32px rgba(91,94,244,0.42), inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 14px 24px; background: transparent;
+      border: 1px solid var(--border2); color: var(--muted2);
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600;
+      border-radius: 14px; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--p); color: var(--text); }
+
+    /* ─── DOCK HERO VISUAL ─── */
+    .hero-visual {
+      position: relative; z-index: 2;
+      margin-top: 70px; width: 100%; max-width: 860px; margin-left: auto; margin-right: auto;
+      animation: fadeUp 0.7s 0.34s ease both;
+    }
+    .browser-mock {
+      background: #0c0c1e; border: 1px solid var(--border2);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04),
+                  0 0 80px rgba(91,94,244,0.08);
+    }
+    .browser-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px; background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+    }
+    .browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .browser-dot:nth-child(1) { background: #ff5f56; }
+    .browser-dot:nth-child(2) { background: #ffbd2e; }
+    .browser-dot:nth-child(3) { background: #27c93f; }
+    .browser-url {
+      flex: 1; margin-left: 8px; height: 24px; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 6px;
+      display: flex; align-items: center; padding: 0 10px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+    }
+    .browser-content {
+      position: relative; height: 420px; background: var(--bg2);
+      overflow: hidden;
+    }
+    /* Simulated page inside browser */
+    .page-sim {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #0f1118 0%, #0a0b14 100%);
+      display: flex; flex-direction: column;
+    }
+    .page-sim-topbar {
+      height: 50px; background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; padding: 0 20px; gap: 16px;
+    }
+    .page-sim-topbar-logo { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg,#4f46e5,#7c3aed); }
+    .page-sim-topbar-nav { display: flex; gap: 20px; }
+    .page-sim-topbar-link { width: 48px; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.08); }
+    .page-sim-topbar-link.active { background: rgba(91,94,244,0.5); }
+    .page-sim-main {
+      flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px; padding: 14px; align-content: start;
+    }
+    .page-sim-card {
+      border-radius: 10px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07); overflow: hidden;
+    }
+    .page-sim-card-img { height: 90px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+    .page-sim-card-img.c1 { background: linear-gradient(135deg,#1e1b4b,#312e81); }
+    .page-sim-card-img.c2 { background: linear-gradient(135deg,#1c1917,#292524); }
+    .page-sim-card-img.c3 { background: linear-gradient(135deg,#042f2e,#065f46); }
+    .page-sim-card-body { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+    .page-sim-card-line { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.07); }
+    .page-sim-card-line.short { width: 55%; }
+
+    /* Dock */
+    .dock-sim {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center;
+      background: rgba(10,10,24,0.96);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-bottom: none;
+      border-radius: 18px 18px 0 0;
+      padding: 12px 20px;
+      gap: 8px;
+      box-shadow: 0 -8px 40px rgba(91,94,244,0.18), 0 -1px 0 rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      animation: dockSlideUp 0.8s 1.1s ease both;
+    }
+    .dock-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 8px 12px; border-radius: 12px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .dock-btn:hover { background: rgba(255,255,255,0.06); }
+    .dock-btn-icon {
+      width: 32px; height: 32px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .dock-btn-label { font-size: 9px; color: var(--muted); font-family: 'Syne', sans-serif; font-weight: 600; white-space: nowrap; }
+    .dock-btn.active .dock-btn-icon { background: rgba(91,94,244,0.25); box-shadow: 0 4px 16px rgba(91,94,244,0.3); }
+    .dock-btn.active .dock-btn-label { color: var(--p3); }
+    .dock-sep { width: 1px; height: 36px; background: rgba(255,255,255,0.08); margin: 0 4px; }
+
+    /* Hotspot indicators */
+    .hotspot-indicator {
+      position: absolute; bottom: 0;
+      width: 80px; height: 10px;
+      border-radius: 4px 4px 0 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hotspot-indicator.left { left: 0; background: linear-gradient(0deg, rgba(245,158,11,0.3), transparent); }
+    .hotspot-indicator.right { right: 0; background: linear-gradient(0deg, rgba(245,158,11,0.3), transparent); }
+    .hotspot-indicator::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      animation: hotspotPulse 2.5s ease-in-out infinite;
+    }
+    .hotspot-indicator.left::before { background: rgba(245,158,11,0.4); }
+    .hotspot-indicator.right::before { background: rgba(245,158,11,0.4); animation-delay: 1.25s; }
+    .hotspot-label {
+      position: absolute; bottom: 14px;
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      color: var(--amber2); font-weight: 500; white-space: nowrap;
+      background: rgba(15,12,5,0.9); border: 1px solid rgba(245,158,11,0.3);
+      border-radius: 5px; padding: 2px 6px;
+      opacity: 0; animation: hotspotLabelFade 2.5s ease-in-out infinite;
+    }
+    .hotspot-indicator.left .hotspot-label { left: 8px; animation-delay: 0.3s; }
+    .hotspot-indicator.right .hotspot-label { right: 8px; animation-delay: 1.55s; }
+
+    /* ─── SECTION SHARED ─── */
+    section { position: relative; overflow: hidden; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+    .section-pad { padding: 100px 0; }
+    .section-pad-sm { padding: 72px 0; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted2); margin-bottom: 16px;
+    }
+    .section-label-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--p3); }
+    .section-label-dot.amber { background: var(--amber); }
+    .section-label-dot.pink { background: var(--pink); }
+    .section-label-dot.teal { background: var(--teal); }
+
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(44px, 7vw, 80px);
+      font-weight: 400; letter-spacing: 0.015em; line-height: 0.93;
+    }
+    h2 em { font-style: normal; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    h2 em.amber { background: var(--grad-warm); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 800; letter-spacing: -0.02em; line-height: 1.2;
+    }
+
+    .lead {
+      font-size: clamp(15px, 1.8vw, 17px); color: var(--muted2);
+      line-height: 1.7; max-width: 480px;
+    }
+
+    /* ─── DOCK SECTION ─── */
+    .dock-section { padding: 100px 0 80px; }
+    .dock-section-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .dock-feature-list { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+    .dock-feature-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px; border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .dock-feature-item:hover { border-color: var(--border2); background: rgba(91,94,244,0.04); }
+    .dock-feature-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .dock-feature-icon.violet { background: rgba(91,94,244,0.12); }
+    .dock-feature-icon.amber { background: rgba(245,158,11,0.12); }
+    .dock-feature-icon.pink { background: rgba(232,121,249,0.12); }
+    .dock-feature-icon.teal { background: rgba(45,212,191,0.12); }
+    .dock-feature-body h4 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; margin-bottom: 4px; }
+    .dock-feature-body p { font-size: 13px; color: var(--muted2); line-height: 1.55; }
+
+    /* Dock diagram */
+    .dock-diagram-wrap {
+      position: relative; padding: 20px;
+    }
+    .dock-diagram {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 60px rgba(91,94,244,0.06);
+    }
+    .dock-diagram-screen {
+      height: 320px; background: linear-gradient(180deg, #0b0b1a 0%, #080812 100%);
+      position: relative;
+    }
+    .dock-diagram-content {
+      padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .ddc { height: 60px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+    .ddc.tall { height: 100px; grid-row: span 2; }
+
+    .dock-full {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(8,8,20,0.97);
+      border: 1px solid rgba(255,255,255,0.13); border-bottom: none;
+      border-radius: 16px 16px 0 0;
+      padding: 10px 18px;
+      box-shadow: 0 -6px 30px rgba(91,94,244,0.22);
+      backdrop-filter: blur(20px);
+    }
+    .df-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 7px 11px; border-radius: 10px;
+    }
+    .df-btn-i {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .df-btn-i.on { background: rgba(91,94,244,0.2); box-shadow: 0 2px 12px rgba(91,94,244,0.35); }
+    .df-btn-l { font-size: 8px; color: var(--muted); font-family: 'Syne', sans-serif; font-weight: 600; white-space: nowrap; }
+    .df-btn.active .df-btn-l { color: var(--p3); }
+    .df-sep { width: 1px; height: 32px; background: rgba(255,255,255,0.08); }
+
+    /* Hotspot arrows */
+    .hs-left, .hs-right {
+      position: absolute; bottom: 0;
+      height: 8px; width: 64px;
+      border-radius: 4px 4px 0 0;
+    }
+    .hs-left { left: 0; background: linear-gradient(0deg, rgba(245,158,11,0.5), transparent); }
+    .hs-right { right: 0; background: linear-gradient(0deg, rgba(245,158,11,0.5), transparent); }
+    .hs-left::after, .hs-right::after {
+      content: 'wake'; position: absolute; bottom: 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 8px;
+      color: var(--amber); background: rgba(10,8,0,0.9);
+      border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 2px 5px;
+      animation: hotspotPulse 2.5s ease-in-out infinite;
+    }
+    .hs-left::after { left: 4px; animation-delay: 0s; }
+    .hs-right::after { right: 4px; animation-delay: 1.25s; }
+
+    /* Bubble wake marker */
+    .bubble-wake {
+      position: absolute; top: 12px; right: 12px;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--bg3); border: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+      box-shadow: 0 0 0 0 rgba(91,94,244,0.4);
+      animation: bubbleRing 2.8s ease-in-out infinite;
+    }
+
+    /* ─── HOTSPOT SECTION ─── */
+    .hotspot-section { padding: 80px 0; }
+    .hotspot-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-top: 48px;
+    }
+    .hotspot-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px; overflow: hidden;
+      position: relative; transition: border-color 0.3s, transform 0.3s;
+    }
+    .hotspot-card:hover { border-color: var(--border3); transform: translateY(-3px); }
+    .hotspot-card-accent {
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      border-radius: 20px 20px 0 0;
+    }
+    .hotspot-card-accent.amber { background: linear-gradient(90deg, var(--amber), var(--amber2)); }
+    .hotspot-card-accent.violet { background: var(--grad); }
+    .hotspot-card-num {
+      width: 42px; height: 42px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      margin-bottom: 16px; letter-spacing: 0.02em;
+    }
+    .hotspot-card-num.amber { background: rgba(245,158,11,0.12); color: var(--amber2); }
+    .hotspot-card-num.violet { background: rgba(91,94,244,0.12); color: var(--p3); }
+    .hotspot-card h4 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; margin-bottom: 8px; }
+    .hotspot-card p { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+
+    /* ─── PROMPT MANAGER ─── */
+    .pm-section { padding: 100px 0; }
+    .pm-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .pm-visual {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+    }
+    .pm-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .pm-header-title {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px;
+    }
+    .pm-header-icon { width: 26px; height: 26px; border-radius: 7px; background: var(--grad); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .pm-tabs {
+      display: flex; gap: 6px; padding: 10px 16px; border-bottom: 1px solid var(--border);
+    }
+    .pm-tab {
+      padding: 5px 12px; border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      cursor: pointer;
+    }
+    .pm-tab.active { background: var(--grad); color: #fff; }
+    .pm-tab.inactive { background: rgba(255,255,255,0.04); color: var(--muted2); }
+    .pm-toolbar {
+      display: flex; gap: 6px; padding: 10px 16px; border-bottom: 1px solid var(--border);
+    }
+    .pm-toolbar-btn {
+      padding: 5px 10px; border-radius: 7px;
+      font-size: 10px; font-family: 'Syne', sans-serif; font-weight: 700;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--muted2); cursor: pointer;
+    }
+    .pm-toolbar-btn.pull { background: rgba(232,121,249,0.1); border-color: rgba(232,121,249,0.25); color: var(--pink); }
+    .pm-list { padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+    .pm-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 12px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .pm-item:hover { border-color: var(--border2); }
+    .pm-item-icon { font-size: 14px; }
+    .pm-item-body { flex: 1; }
+    .pm-item-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; margin-bottom: 2px; }
+    .pm-item-preview { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+    .pm-item-paste {
+      padding: 4px 10px; border-radius: 7px;
+      font-size: 10px; font-family: 'Syne', sans-serif; font-weight: 700;
+      background: rgba(91,94,244,0.14); border: 1px solid rgba(91,94,244,0.3);
+      color: var(--p3); cursor: pointer; white-space: nowrap;
+    }
+    .pm-item-cat {
+      padding: 2px 7px; border-radius: 5px;
+      font-size: 9px; font-family: 'Syne', sans-serif; font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .pm-item-cat.dream { background: rgba(232,121,249,0.12); color: var(--pink); }
+    .pm-item-cat.ci { background: rgba(45,212,191,0.12); color: var(--teal); }
+
+    /* PM text content */
+    .pm-features { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
+    .pm-feature {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .pm-feature-icon { font-size: 20px; margin-top: 2px; }
+    .pm-feature h4 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; margin-bottom: 4px; }
+    .pm-feature p { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+
+    /* ─── VISION AI ─── */
+    .vision-section { padding: 100px 0; }
+    .vision-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .vision-card {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+    }
+    .vision-card-header {
+      padding: 16px 18px; border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .vision-card-title {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .vision-icon-badge {
+      width: 26px; height: 26px; border-radius: 7px;
+      background: linear-gradient(135deg,rgba(91,94,244,0.4),rgba(232,121,249,0.4));
+      display: flex; align-items: center; justify-content: center; font-size: 13px;
+    }
+    .vision-save-btn {
+      padding: 6px 14px; border-radius: 8px;
+      background: var(--grad); color: #fff;
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      cursor: pointer; box-shadow: 0 4px 12px rgba(91,94,244,0.3);
+    }
+    .vision-fields { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .vision-field {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px; border-radius: 10px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    }
+    .vision-field-label {
+      font-size: 10px; font-family: 'Syne', sans-serif; font-weight: 700;
+      color: var(--muted); min-width: 110px;
+    }
+    .vision-field-value {
+      flex: 1; height: 18px; border-radius: 5px;
+      background: rgba(255,255,255,0.06); font-size: 10px;
+      display: flex; align-items: center; padding: 0 8px; color: var(--muted2);
+      font-family: 'Outfit', sans-serif; font-weight: 500;
+    }
+    .vision-field-saved { font-size: 9px; font-family: 'JetBrains Mono', monospace; }
+    .vision-field-saved.yes { color: #34d399; }
+    .vision-profiles-strip {
+      padding: 12px 16px; border-top: 1px solid var(--border);
+      background: rgba(91,94,244,0.04);
+    }
+    .vision-profiles-label {
+      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+      color: var(--muted); margin-bottom: 8px; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .vision-profile-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .vpc {
+      padding: 5px 11px; border-radius: 8px;
+      font-size: 10px; font-family: 'Syne', sans-serif; font-weight: 700;
+      cursor: pointer; border: 1px solid;
+    }
+    .vpc.active { background: rgba(91,94,244,0.18); border-color: rgba(91,94,244,0.4); color: var(--p3); }
+    .vpc.inactive { background: rgba(255,255,255,0.04); border-color: var(--border); color: var(--muted2); }
+
+    .vision-features { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
+    .vision-feature { display: flex; gap: 14px; align-items: flex-start; }
+    .vision-feature-icon { font-size: 20px; margin-top: 2px; }
+    .vision-feature h4 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; margin-bottom: 4px; }
+    .vision-feature p { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+
+    /* ─── DREAM PROMPT ─── */
+    .dream-section { padding: 100px 0; }
+    .dream-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .dream-flow {
+      display: flex; flex-direction: column; gap: 0;
+      position: relative;
+    }
+    .dream-flow-step {
+      display: flex; gap: 16px; align-items: flex-start;
+      position: relative;
+    }
+    .dream-flow-step + .dream-flow-step { margin-top: 0; }
+    .dream-flow-left {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0;
+    }
+    .dream-flow-num {
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+      flex-shrink: 0; z-index: 1;
+    }
+    .dream-flow-num.pink { background: rgba(232,121,249,0.15); color: var(--pink); border: 1px solid rgba(232,121,249,0.3); }
+    .dream-flow-num.violet { background: rgba(91,94,244,0.15); color: var(--p3); border: 1px solid rgba(91,94,244,0.3); }
+    .dream-flow-num.teal { background: rgba(45,212,191,0.15); color: var(--teal); border: 1px solid rgba(45,212,191,0.3); }
+    .dream-flow-line {
+      width: 1px; flex: 1; min-height: 40px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+      margin: 4px 0;
+    }
+    .dream-flow-content { padding: 6px 0 32px; }
+    .dream-flow-content h4 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; margin-bottom: 6px; }
+    .dream-flow-content p { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+    .dream-flow-tag {
+      display: inline-block; margin-top: 8px;
+      padding: 3px 9px; border-radius: 6px;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 500;
+    }
+    .dream-flow-tag.pink { background: rgba(232,121,249,0.1); color: var(--pink); border: 1px solid rgba(232,121,249,0.2); }
+    .dream-flow-tag.violet { background: rgba(91,94,244,0.1); color: var(--p3); border: 1px solid rgba(91,94,244,0.2); }
+    .dream-flow-tag.teal { background: rgba(45,212,191,0.1); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); }
+
+    /* Dream prompt card */
+    .dream-card {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+    }
+    .dream-card-header {
+      padding: 14px 16px; border-bottom: 1px solid var(--border);
+      background: rgba(232,121,249,0.04);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .dream-card-icon {
+      width: 26px; height: 26px; border-radius: 7px;
+      background: linear-gradient(135deg,rgba(232,121,249,0.4),rgba(139,92,246,0.4));
+      display: flex; align-items: center; justify-content: center; font-size: 13px;
+    }
+    .dream-card-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; }
+    .dream-textarea-wrap { padding: 14px; }
+    .dream-textarea-sim {
+      width: 100%; min-height: 90px; border-radius: 12px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(232,121,249,0.2);
+      padding: 12px; font-size: 11px; color: var(--muted2);
+      font-family: 'Outfit', sans-serif; line-height: 1.65;
+      position: relative;
+    }
+    .dream-cursor {
+      display: inline-block; width: 2px; height: 13px;
+      background: var(--pink); border-radius: 1px; margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+    .dream-actions {
+      display: flex; gap: 8px; padding: 0 14px 14px;
+    }
+    .dream-action-btn {
+      flex: 1; padding: 8px; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      cursor: pointer; text-align: center;
+    }
+    .dream-action-btn.pull { background: rgba(232,121,249,0.12); border: 1px solid rgba(232,121,249,0.3); color: var(--pink); }
+    .dream-action-btn.save { background: rgba(91,94,244,0.12); border: 1px solid rgba(91,94,244,0.3); color: var(--p3); }
+    .dream-action-btn.paste { background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.25); color: var(--teal); }
+
+    /* Dream saved list */
+    .dream-saved { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 5px; }
+    .dream-saved-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 10px; border-radius: 10px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    }
+    .dream-saved-item-name { flex: 1; font-size: 10px; font-family: 'Syne', sans-serif; font-weight: 700; }
+    .dream-saved-paste {
+      padding: 3px 9px; border-radius: 6px;
+      font-size: 9px; font-family: 'Syne', sans-serif; font-weight: 700;
+      background: rgba(232,121,249,0.1); border: 1px solid rgba(232,121,249,0.25); color: var(--pink);
+    }
+
+    /* ─── CUSTOM INSTRUCTIONS ─── */
+    .ci-section { padding: 80px 0 100px; }
+    .ci-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .ci-card {
+      background: var(--bg2); border: 1px solid var(--border2);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+    }
+    .ci-card-header {
+      padding: 14px 16px; border-bottom: 1px solid var(--border);
+      background: rgba(45,212,191,0.04);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ci-card-icon {
+      width: 26px; height: 26px; border-radius: 7px;
+      background: linear-gradient(135deg,rgba(45,212,191,0.4),rgba(91,94,244,0.4));
+      display: flex; align-items: center; justify-content: center; font-size: 13px;
+    }
+    .ci-card-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; }
+    .ci-list { padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+    .ci-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 12px; border-radius: 12px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    }
+    .ci-item-icon { font-size: 14px; margin-top: 1px; }
+    .ci-item-body { flex: 1; }
+    .ci-item-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; margin-bottom: 3px; }
+    .ci-item-text { font-size: 10px; color: var(--muted); line-height: 1.5; overflow: hidden; max-height: 30px; }
+    .ci-item-paste {
+      padding: 4px 10px; border-radius: 7px; flex-shrink: 0;
+      font-size: 10px; font-family: 'Syne', sans-serif; font-weight: 700;
+      background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.25); color: var(--teal);
+    }
+    .ci-arrow {
+      padding: 10px 14px; display: flex; align-items: center;
+      gap: 12px; border-top: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .ci-arrow-line {
+      flex: 1; height: 1px; background: linear-gradient(90deg, rgba(45,212,191,0.4), rgba(91,94,244,0.4));
+    }
+    .ci-arrow-text { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--teal); }
+    .ci-target {
+      margin: 0 14px 14px; padding: 10px 12px; border-radius: 12px;
+      background: rgba(45,212,191,0.06); border: 1px solid rgba(45,212,191,0.2);
+      font-size: 10px; color: var(--teal); font-family: 'Outfit', sans-serif; line-height: 1.6;
+    }
+    .ci-target-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; opacity: 0.7; }
+
+    .ci-features { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+    .ci-feature { display: flex; gap: 14px; align-items: flex-start; }
+    .ci-feature-icon { font-size: 18px; margin-top: 2px; }
+    .ci-feature h4 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; margin-bottom: 4px; }
+    .ci-feature p { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+
+    /* ─── FREE / CTA SECTION ─── */
+    .cta-section { padding: 100px 0; text-align: center; position: relative; overflow: hidden; }
+    .cta-orb {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 800px; height: 500px; pointer-events: none;
+      background: radial-gradient(ellipse, rgba(91,94,244,0.14) 0%, rgba(139,92,246,0.07) 40%, transparent 70%);
+    }
+    .cta-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 999px; margin-bottom: 24px;
+      background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25);
+    }
+    .cta-badge-text { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--amber2); letter-spacing: 0.06em; text-transform: uppercase; }
+    .cta-sub { font-size: 18px; color: var(--muted2); max-width: 480px; margin: 20px auto 40px; font-weight: 400; }
+    .cta-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .btn-cta-main {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 36px; background: var(--grad);
+      color: #fff; font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800;
+      border-radius: 16px; text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 12px 40px rgba(91,94,244,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+      letter-spacing: -0.01em;
+    }
+    .btn-cta-main:hover { opacity: 0.86; transform: translateY(-2px); }
+    .cta-fine { margin-top: 24px; font-size: 13px; color: var(--muted); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-brand {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px;
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-link { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-link:hover { color: var(--muted2); }
+    .footer-copy { font-size: 12px; color: var(--muted); }
+
+    /* ─── DIVIDER ─── */
+    .divider { height: 1px; background: var(--border); max-width: 1120px; margin: 0 auto; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+    }
+    @keyframes logoPulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+    @keyframes hotspotPulse {
+      0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
+    }
+    @keyframes hotspotLabelFade {
+      0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; }
+    }
+    @keyframes dockSlideUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes bubbleRing {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(91,94,244,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(91,94,244,0); }
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-link { display: none; }
+      .dock-section-inner,
+      .pm-inner, .vision-inner, .dream-inner, .ci-inner {
+        grid-template-columns: 1fr;
+      }
+      .hotspot-grid { grid-template-columns: 1fr; }
+      .browser-content { height: 280px; }
+      .page-sim-main { grid-template-columns: 1fr 1fr; }
+      footer { padding: 24px 20px; }
+      .footer-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#" class="nav-brand">
+    <img src="icon128.png" alt="Lavender Dragon Design logo" class="nav-brand-icon" />
+    LDD MD Enhancer
+    <span class="nav-badge">v36</span>
+  </a>
+  <div class="nav-right">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="privacy.html" class="nav-link">Privacy</a>
+    <a href="https://www.buymeacoffee.com/lavenderdragon" target="_blank" class="nav-link">Support</a>
+    <a href="LDDEnhancerv.36.zip" download class="btn-nav">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Unpacked
+    </a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg-orb"></div>
+  <div class="hero-bg-orb2"></div>
+
+  <div class="hero-eyebrow">
+    <div class="hero-eyebrow-dot"></div>
+    <span class="hero-eyebrow-text">LavenderDragonDesign · Free Chrome Extension</span>
+  </div>
+
+  <div class="hero-logo-wrap">
+    <img src="icon128.png" alt="LDD" class="hero-logo" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#5b5ef4,#8b5cf6)';this.parentElement.style.borderRadius='20px';" />
+    <div class="hero-logo-glow"></div>
+  </div>
+
+  <h1>Your<br /><em>Dock.</em><br />Your Workflow.</h1>
+  <p class="hero-sub">
+    LDD MD Enhancer transforms MyDesigns.io into a powerhouse workflow.
+    Vision AI Profiles, Prompt Manager, Dream Prompt tools —
+    all launched from one slick dock that hides until you need it.
+  </p>
+
+  <div class="hero-actions">
+    <a href="LDDEnhancerv.36.zip" download class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Unpacked Extension
+    </a>
+    <a href="#features" class="btn-ghost">
+      See what's inside
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+  <p style="margin-top:14px;font-size:12px;color:var(--muted);font-family:'Syne',sans-serif;font-weight:600;position:relative;z-index:2;">
+    🕐 Chrome Web Store submission in progress — download the unpacked version to use now
+  </p>
+
+  <!-- Browser mock -->
+  <div class="hero-visual">
+    <div class="browser-mock">
+      <div class="browser-bar">
+        <div class="browser-dot"></div>
+        <div class="browser-dot"></div>
+        <div class="browser-dot"></div>
+        <div class="browser-url">mydesigns.io/app/listings</div>
+      </div>
+      <div class="browser-content">
+        <div class="page-sim">
+          <div class="page-sim-topbar">
+            <div class="page-sim-topbar-logo"></div>
+            <div class="page-sim-topbar-nav">
+              <div class="page-sim-topbar-link active"></div>
+              <div class="page-sim-topbar-link"></div>
+              <div class="page-sim-topbar-link"></div>
+              <div class="page-sim-topbar-link"></div>
+            </div>
+          </div>
+          <div class="page-sim-main">
+            <div class="page-sim-card"><div class="page-sim-card-img c1"></div><div class="page-sim-card-body"><div class="page-sim-card-line"></div><div class="page-sim-card-line short"></div></div></div>
+            <div class="page-sim-card"><div class="page-sim-card-img c2"></div><div class="page-sim-card-body"><div class="page-sim-card-line"></div><div class="page-sim-card-line short"></div></div></div>
+            <div class="page-sim-card"><div class="page-sim-card-img c3"></div><div class="page-sim-card-body"><div class="page-sim-card-line"></div><div class="page-sim-card-line short"></div></div></div>
+          </div>
+        </div>
+
+        <!-- Wake hotspot indicators -->
+        <div class="hotspot-indicator left">
+          <span class="hotspot-label">bottom-left wake</span>
+        </div>
+        <div class="hotspot-indicator right">
+          <span class="hotspot-label">bottom-right wake</span>
+        </div>
+
+        <!-- The dock -->
+        <div class="dock-sim">
+          <div class="dock-btn active">
+            <div class="dock-btn-icon on">✨</div>
+            <span class="dock-btn-label">Vision AI</span>
+          </div>
+          <div class="dock-btn">
+            <div class="dock-btn-icon">🌙</div>
+            <span class="dock-btn-label">Dream AI</span>
+          </div>
+          <div class="dock-sep"></div>
+          <div class="dock-btn">
+            <div class="dock-btn-icon">📋</div>
+            <span class="dock-btn-label">Prompts</span>
+          </div>
+          <div class="dock-sep"></div>
+          <div class="dock-btn">
+            <div class="dock-btn-icon">🗑️</div>
+            <span class="dock-btn-label">Remove BG</span>
+          </div>
+          <div class="dock-btn">
+            <div class="dock-btn-icon">🔼</div>
+            <span class="dock-btn-label">Upscale</span>
+          </div>
+          <div class="dock-btn">
+            <div class="dock-btn-icon">↔️</div>
+            <span class="dock-btn-label">Resize</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="features"></div>
+
+<!-- ═══ DOCK ═══ -->
+<section class="dock-section">
+  <div class="container">
+    <div class="dock-section-inner">
+      <div>
+        <div class="section-label">
+          <div class="section-label-dot"></div>
+          The Dock
+        </div>
+        <h2>Dock-first.<br /><em>Not sidebar</em><br />first.</h2>
+        <p class="lead" style="margin-top:20px;">
+          The dock lives at the bottom of every MyDesigns.io page. 
+          It's hidden until you need it, wakes instantly, and keeps every tool exactly one click away — no menus, no hunting.
+        </p>
+
+        <div class="dock-feature-list">
+          <div class="dock-feature-item">
+            <div class="dock-feature-icon violet">🧩</div>
+            <div class="dock-feature-body">
+              <h4>Modular controls</h4>
+              <p>Toggle the MD Enhancer, Dock, Drag & Drop, and Auto Rename independently. Use what you need, nothing else.</p>
+            </div>
+          </div>
+          <div class="dock-feature-item">
+            <div class="dock-feature-icon amber">⚡</div>
+            <div class="dock-feature-body">
+              <h4>Context-aware layout</h4>
+              <p>The dock adapts to where you are — listing view, Vision AI, Dream AI, or the canvas. Different page, right tools.</p>
+            </div>
+          </div>
+          <div class="dock-feature-item">
+            <div class="dock-feature-icon pink">🎨</div>
+            <div class="dock-feature-body">
+              <h4>Auto-hide with smart wake</h4>
+              <p>Auto-hides after your set delay. Snaps back instantly when you hover a wake zone. Never in the way.</p>
+            </div>
+          </div>
+          <div class="dock-feature-item">
+            <div class="dock-feature-icon teal">⚙️</div>
+            <div class="dock-feature-body">
+              <h4>Dock Settings — full control</h4>
+              <p>Customise auto-hide delay, dock theme, chevron effect, and toggle the Buy Me a Coffee button on or off — all from the dock's own settings panel.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dock-diagram-wrap">
+        <div class="dock-diagram">
+          <div class="dock-diagram-screen">
+            <div class="dock-diagram-content">
+              <div class="ddc"></div>
+              <div class="ddc tall"></div>
+              <div class="ddc"></div>
+              <div class="ddc"></div>
+              <div class="ddc"></div>
+            </div>
+
+            <!-- Bubble wake -->
+            <div class="bubble-wake">🐉</div>
+
+            <!-- Bottom hotspots -->
+            <div class="hs-left"></div>
+            <div class="hs-right"></div>
+
+            <!-- Dock -->
+            <div class="dock-full">
+              <div class="df-btn active">
+                <div class="df-btn-i on">✨</div>
+                <span class="df-btn-l">Vision AI</span>
+              </div>
+              <div class="df-btn">
+                <div class="df-btn-i">🌙</div>
+                <span class="df-btn-l">Dream AI</span>
+              </div>
+              <div class="df-sep"></div>
+              <div class="df-btn">
+                <div class="df-btn-i">📋</div>
+                <span class="df-btn-l">Prompts</span>
+              </div>
+              <div class="df-sep"></div>
+              <div class="df-btn">
+                <div class="df-btn-i">🔼</div>
+                <span class="df-btn-l">Upscale</span>
+              </div>
+              <div class="df-btn">
+                <div class="df-btn-i">🗑️</div>
+                <span class="df-btn-l">Remove BG</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOTSPOTS ═══ -->
+<section class="hotspot-section">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:8px;">
+      <div class="section-label" style="justify-content:center;">
+        <div class="section-label-dot amber"></div>
+        Wake Hotspots
+      </div>
+    </div>
+    <h2 style="text-align:center;">Three ways to<br /><em class="amber">wake the dock</em></h2>
+    <p style="text-align:center; margin:16px auto 0; max-width:480px; color:var(--muted2); font-size:16px;">
+      Never click a button just to open your toolbar again. Hover any wake zone and the dock glides up instantly.
+    </p>
+
+    <div class="hotspot-grid">
+      <div class="hotspot-card">
+        <div class="hotspot-card-accent amber"></div>
+        <div class="hotspot-card-num amber">01</div>
+        <h4>Bottom-Left Corner</h4>
+        <p>Hover the bottom-left edge of any MyDesigns.io page. The dock rises without you lifting your eyes from the content area.</p>
+      </div>
+      <div class="hotspot-card">
+        <div class="hotspot-card-accent amber"></div>
+        <div class="hotspot-card-num amber">02</div>
+        <h4>Bottom-Right Corner</h4>
+        <p>Same trigger on the right side. Works wherever your cursor naturally rests at the end of a row of listing cards.</p>
+      </div>
+      <div class="hotspot-card">
+        <div class="hotspot-card-accent violet"></div>
+        <div class="hotspot-card-num violet">03</div>
+        <h4>MD Enhancer Bubble</h4>
+        <p>The LDD bubble that sits inline on the page is also a wake point. Hover it and the dock appears — no click required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="margin:20px auto;"></div>
+
+<!-- ═══ PROMPT MANAGER ═══ -->
+<section class="pm-section">
+  <div class="container">
+    <div class="pm-inner">
+      <!-- Visual -->
+      <div class="pm-visual">
+        <div class="pm-header">
+          <div class="pm-header-title">
+            <div class="pm-header-icon">📋</div>
+            Prompt Manager
+          </div>
+          <span style="font-size:10px;color:var(--muted);font-family:'Syne',sans-serif;font-weight:700;">3 custom · 2 dreams</span>
+        </div>
+        <div class="pm-tabs">
+          <div class="pm-tab active">All</div>
+          <div class="pm-tab inactive">Custom Instructions</div>
+          <div class="pm-tab inactive">Dream Prompts</div>
+        </div>
+        <div class="pm-toolbar">
+          <div class="pm-toolbar-btn">+ New</div>
+          <div class="pm-toolbar-btn pull">⬇ Pull Current Dream</div>
+          <div style="flex:1;"></div>
+          <div style="height:22px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:7px;padding:0 8px;font-size:10px;color:var(--muted);display:flex;align-items:center;font-family:'Outfit',sans-serif;">Search…</div>
+        </div>
+        <div class="pm-list">
+          <div class="pm-item">
+            <div class="pm-item-icon">📄</div>
+            <div class="pm-item-body">
+              <div class="pm-item-name">Etsy Mug Listing CI</div>
+              <div class="pm-item-preview">Write a warm, SEO-rich Etsy listing for a ceramic mug…</div>
+            </div>
+            <div class="pm-item-cat ci">CI</div>
+            <div class="pm-item-paste">Paste to CI</div>
+          </div>
+          <div class="pm-item">
+            <div class="pm-item-icon">🌙</div>
+            <div class="pm-item-body">
+              <div class="pm-item-name">Pulled Dream Prompt</div>
+              <div class="pm-item-preview">hyper-realistic vintage coffee mug, warm morning light…</div>
+            </div>
+            <div class="pm-item-cat dream">Dream</div>
+            <div class="pm-item-paste">Paste to Dream</div>
+          </div>
+          <div class="pm-item">
+            <div class="pm-item-icon">📄</div>
+            <div class="pm-item-body">
+              <div class="pm-item-name">T-Shirt Listing Template</div>
+              <div class="pm-item-preview">High-quality unisex tee, vibrant print, perfect gift for…</div>
+            </div>
+            <div class="pm-item-cat ci">CI</div>
+            <div class="pm-item-paste">Paste to CI</div>
+          </div>
+          <div class="pm-item">
+            <div class="pm-item-icon">🌙</div>
+            <div class="pm-item-body">
+              <div class="pm-item-name">Abstract Poster Dream</div>
+              <div class="pm-item-preview">minimalist geometric poster, deep navy palette…</div>
+            </div>
+            <div class="pm-item-cat dream">Dream</div>
+            <div class="pm-item-paste">Paste to Dream</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div>
+        <div class="section-label">
+          <div class="section-label-dot"></div>
+          Prompt Manager
+        </div>
+        <h2>One hub<br />for <em>every</em><br />prompt you own.</h2>
+        <p class="lead" style="margin-top:20px;">
+          Save, search, pin, and instantly paste your Custom Instructions and Dream prompts — from a single panel you access directly from the dock.
+        </p>
+
+        <div class="pm-features">
+          <div class="pm-feature">
+            <div class="pm-feature-icon">📄</div>
+            <div>
+              <h4>Saved Custom Instructions</h4>
+              <p>Store the full CI text for any listing type. Hit Paste to CI and it drops directly into Vision AI's Custom Instructions field.</p>
+            </div>
+          </div>
+          <div class="pm-feature">
+            <div class="pm-feature-icon">🌙</div>
+            <div>
+              <h4>Dream Prompts library</h4>
+              <p>Save pulled Dream prompts as named entries. Paste them back to Dream AI with one click — even across sessions.</p>
+            </div>
+          </div>
+          <div class="pm-feature">
+            <div class="pm-feature-icon">📌</div>
+            <div>
+              <h4>Pin, search, and organise</h4>
+              <p>Pin your most-used prompts to the top. Full text search. Counts shown live. No tabs. No spreadsheets.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="margin:0 auto;"></div>
+
+<!-- ═══ VISION AI PROFILES ═══ -->
+<section class="vision-section">
+  <div class="container">
+    <div class="vision-inner">
+      <!-- Text -->
+      <div>
+        <div class="section-label">
+          <div class="section-label-dot pink"></div>
+          Vision AI Profiles
+        </div>
+        <h2>Set it once.<br /><em>Load it</em><br />forever.</h2>
+        <p class="lead" style="margin-top:20px;">
+          Vision AI Profiles snapshot your entire setup — platform, model, product type, field mappings, writing mode, and custom instructions — and restore them in seconds.
+        </p>
+
+        <div class="vision-features">
+          <div class="vision-feature">
+            <div class="vision-feature-icon">✨</div>
+            <div>
+              <h4>Full setup capture</h4>
+              <p>Captures Input File Slot, platform, model, product type (including custom text), title/description/tags fields, writing mode, product features, and CI text.</p>
+            </div>
+          </div>
+          <div class="vision-feature">
+            <div class="vision-feature-icon">⚡</div>
+            <div>
+              <h4>One-click restore</h4>
+              <p>Open the profile manager, click a saved profile, and every dropdown and field snaps back to exactly where you left it.</p>
+            </div>
+          </div>
+          <div class="vision-feature">
+            <div class="vision-feature-icon">🔁</div>
+            <div>
+              <h4>Built for repeat workflows</h4>
+              <p>Mugs, tees, posters — each product type gets its own profile. No reconfiguring Vision AI every time you switch.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual -->
+      <div class="vision-card">
+        <div class="vision-card-header">
+          <div class="vision-card-title">
+            <div class="vision-icon-badge">✨</div>
+            Vision AI — Save / Load Profile
+          </div>
+          <div class="vision-save-btn">Save Current</div>
+        </div>
+        <div class="vision-fields">
+          <div class="vision-field">
+            <div class="vision-field-label">Select platform</div>
+            <div class="vision-field-value">Etsy</div>
+            <div class="vision-field-saved yes">✓ saved</div>
+          </div>
+          <div class="vision-field">
+            <div class="vision-field-label">Select model</div>
+            <div class="vision-field-value">Claude 3.5 Sonnet</div>
+            <div class="vision-field-saved yes">✓ saved</div>
+          </div>
+          <div class="vision-field">
+            <div class="vision-field-label">Product type</div>
+            <div class="vision-field-value">Mug · Ceramic</div>
+            <div class="vision-field-saved yes">✓ saved</div>
+          </div>
+          <div class="vision-field">
+            <div class="vision-field-label">Title field</div>
+            <div class="vision-field-value">Title (Etsy)</div>
+            <div class="vision-field-saved yes">✓ saved</div>
+          </div>
+          <div class="vision-field">
+            <div class="vision-field-label">Description field</div>
+            <div class="vision-field-value">Description</div>
+            <div class="vision-field-saved yes">✓ saved</div>
+          </div>
+          <div class="vision-field">
+            <div class="vision-field-label">Tags field</div>
+            <div class="vision-field-value">Tags (Etsy)</div>
+            <div class="vision-field-saved yes">✓ saved</div>
+          </div>
+          <div class="vision-field">
+            <div class="vision-field-label">Writing mode</div>
+            <div class="vision-field-value">SEO-optimised</div>
+            <div class="vision-field-saved yes">✓ saved</div>
+          </div>
+          <div class="vision-field">
+            <div class="vision-field-label">Custom Instructions</div>
+            <div class="vision-field-value" style="font-size:9px;color:var(--muted);">Write warm, gift-focused copy…</div>
+            <div class="vision-field-saved yes">✓ saved</div>
+          </div>
+        </div>
+        <div class="vision-profiles-strip">
+          <div class="vision-profiles-label">Saved Profiles</div>
+          <div class="vision-profile-chips">
+            <div class="vpc active">Etsy Mug</div>
+            <div class="vpc inactive">T-Shirt Printify</div>
+            <div class="vpc inactive">Poster Redbubble</div>
+            <div class="vpc inactive">+ New</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="margin:0 auto;"></div>
+
+<!-- ═══ DREAM PROMPT ═══ -->
+<section class="dream-section">
+  <div class="container">
+    <div class="dream-inner">
+      <!-- Visual -->
+      <div class="dream-card">
+        <div class="dream-card-header">
+          <div class="dream-card-icon">🌙</div>
+          <div class="dream-card-title">Dream AI — Prompt Manager</div>
+        </div>
+        <div class="dream-textarea-wrap">
+          <div class="dream-textarea-sim">
+            hyper-realistic vintage coffee mug on a rustic wooden table, warm morning light, steam rising, shallow depth of field, Leica photo style<div class="dream-cursor"></div>
+          </div>
+        </div>
+        <div class="dream-actions">
+          <div class="dream-action-btn pull">⬇ Pull Prompt</div>
+          <div class="dream-action-btn save">💾 Save</div>
+          <div class="dream-action-btn paste">→ Paste to Dream</div>
+        </div>
+        <div style="padding:0 14px 10px;"><div style="height:1px;background:var(--border);"></div></div>
+        <div class="dream-saved">
+          <div style="font-size:9px;font-family:'Syne',sans-serif;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;padding:0 0 4px;">Saved Dream Prompts</div>
+          <div class="dream-saved-item">
+            <div style="font-size:13px;">🌙</div>
+            <div class="dream-saved-item-name">Vintage Coffee Mug</div>
+            <div class="dream-saved-paste">Paste to Dream</div>
+          </div>
+          <div class="dream-saved-item">
+            <div style="font-size:13px;">🌙</div>
+            <div class="dream-saved-item-name">Abstract Geometric Poster</div>
+            <div class="dream-saved-paste">Paste to Dream</div>
+          </div>
+          <div class="dream-saved-item">
+            <div style="font-size:13px;">🌙</div>
+            <div class="dream-saved-item-name">Boho Wall Art Set</div>
+            <div class="dream-saved-paste">Paste to Dream</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div>
+        <div class="section-label">
+          <div class="section-label-dot pink"></div>
+          Pull &amp; Paste Dream Prompt
+        </div>
+        <h2>Dream prompt<br />on <em>demand.</em></h2>
+        <p class="lead" style="margin-top:20px;">
+          Build a prompt in Dream AI, pull it into your library with one click, and paste it right back — any time, any session.
+        </p>
+
+        <div class="dream-flow" style="margin-top:32px;">
+          <div class="dream-flow-step">
+            <div class="dream-flow-left">
+              <div class="dream-flow-num pink">1</div>
+              <div class="dream-flow-line"></div>
+            </div>
+            <div class="dream-flow-content">
+              <h4>Open Dream AI & craft your prompt</h4>
+              <p>Write your image generation prompt directly in Dream AI's interface — tweak it until it's exactly right.</p>
+              <div class="dream-flow-tag pink">dream.ai/dreamer</div>
+            </div>
+          </div>
+          <div class="dream-flow-step">
+            <div class="dream-flow-left">
+              <div class="dream-flow-num violet">2</div>
+              <div class="dream-flow-line"></div>
+            </div>
+            <div class="dream-flow-content">
+              <h4>Pull it into Prompt Manager</h4>
+              <p>Hit <strong>Pull Current Dream Prompt</strong> in the Prompt Manager. The extension reads the active prompt and saves it as a named entry.</p>
+              <div class="dream-flow-tag violet">auto-named · stored locally</div>
+            </div>
+          </div>
+          <div class="dream-flow-step">
+            <div class="dream-flow-left">
+              <div class="dream-flow-num teal">3</div>
+            </div>
+            <div class="dream-flow-content">
+              <h4>Paste it anywhere, anytime</h4>
+              <p>Find it in your Dream Prompts list and hit <strong>Paste to Dream AI</strong>. Works across sessions — your prompts don't disappear.</p>
+              <div class="dream-flow-tag teal">cross-session · one click</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="margin:0 auto;"></div>
+
+<!-- ═══ CUSTOM INSTRUCTIONS ═══ -->
+<section class="ci-section">
+  <div class="container">
+    <div class="ci-inner">
+      <!-- Text -->
+      <div>
+        <div class="section-label">
+          <div class="section-label-dot teal"></div>
+          Saved Custom Instructions
+        </div>
+        <h2>Stop<br /><em>rebuilding</em><br />prompts.</h2>
+        <p class="lead" style="margin-top:20px;">
+          Write your Custom Instructions once, save them by name, and paste them directly into Vision AI's CI field with a single click — no copying, no tabs.
+        </p>
+
+        <div class="ci-features">
+          <div class="ci-feature">
+            <div class="ci-feature-icon">💾</div>
+            <div>
+              <h4>Save by listing type</h4>
+              <p>Keep a separate saved CI for mugs, tees, posters, hoodies — whatever product types you run. Name them anything.</p>
+            </div>
+          </div>
+          <div class="ci-feature">
+            <div class="ci-feature-icon">⚡</div>
+            <div>
+              <h4>Direct paste to Vision AI's CI field</h4>
+              <p>The extension targets the exact Custom Instructions textarea inside Vision AI. It pastes programmatically — no clipboard juggling.</p>
+            </div>
+          </div>
+          <div class="ci-feature">
+            <div class="ci-feature-icon">🔄</div>
+            <div>
+              <h4>Works with Vision AI Profiles</h4>
+              <p>Vision AI Profiles also capture your CI text. Paste a CI separately, or load a full profile that includes it — both paths work.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual -->
+      <div class="ci-card">
+        <div class="ci-card-header">
+          <div class="ci-card-icon">📄</div>
+          <div class="ci-card-title">Saved Custom Instructions</div>
+        </div>
+        <div class="ci-list">
+          <div class="ci-item">
+            <div class="ci-item-icon">📄</div>
+            <div class="ci-item-body">
+              <div class="ci-item-name">Etsy Mug Listing CI</div>
+              <div class="ci-item-text">Write a warm, SEO-rich Etsy listing for a ceramic mug. Lead with a strong keyword-focused title…</div>
+            </div>
+            <div class="ci-item-paste">Paste to CI</div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-item-icon">📄</div>
+            <div class="ci-item-body">
+              <div class="ci-item-name">Printify T-Shirt Listing</div>
+              <div class="ci-item-text">High-quality unisex tee with vibrant print. Emphasise comfort, sizing range, and gift potential…</div>
+            </div>
+            <div class="ci-item-paste">Paste to CI</div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-item-icon">📄</div>
+            <div class="ci-item-body">
+              <div class="ci-item-name">Redbubble Poster CI</div>
+              <div class="ci-item-text">Art-forward description. Focus on mood, aesthetic, room style, and frame options…</div>
+            </div>
+            <div class="ci-item-paste">Paste to CI</div>
+          </div>
+        </div>
+        <div class="ci-arrow">
+          <div class="ci-arrow-text">→ pasting to Vision AI</div>
+          <div class="ci-arrow-line"></div>
+          <div style="font-size:10px;color:var(--teal);font-family:'JetBrains Mono',monospace;">CI field</div>
+        </div>
+        <div class="ci-target">
+          <div class="ci-target-label">Vision AI — Custom Instructions</div>
+          Write a warm, SEO-rich Etsy listing for a ceramic mug. Lead with a strong keyword-focused title, include care instructions, and close with a gift occasion hook. Tone: friendly, approachable, confident.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="cta-orb"></div>
+  <div class="container">
+    <div class="cta-badge">
+      <span class="cta-badge-text">🕐 Chrome Web Store submission in progress</span>
+    </div>
+    <h2 style="position:relative;z-index:2;">The best workflow<br />upgrade for <em>MyDesigns.io</em></h2>
+    <p class="cta-sub" style="position:relative;z-index:2;">
+      Vision AI Profiles, Prompt Manager, Dream prompt tools, three wake hotspots — all in one free extension by LavenderDragonDesign.
+    </p>
+
+    <!-- Install steps -->
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:36px;position:relative;z-index:2;">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--bg2);border:1px solid var(--border2);border-radius:14px;">
+        <div style="width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;font-family:'Bebas Neue',sans-serif;color:#fff;font-weight:400;flex-shrink:0;">1</div>
+        <div style="text-align:left;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:12px;">Download the ZIP</div>
+          <div style="font-size:11px;color:var(--muted);">Click the button below</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:18px;">→</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--bg2);border:1px solid var(--border2);border-radius:14px;">
+        <div style="width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;font-family:'Bebas Neue',sans-serif;color:#fff;font-weight:400;flex-shrink:0;">2</div>
+        <div style="text-align:left;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:12px;">Unzip the folder</div>
+          <div style="font-size:11px;color:var(--muted);">Extract LDDEnhancer/</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:18px;">→</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--bg2);border:1px solid var(--border2);border-radius:14px;">
+        <div style="width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;font-family:'Bebas Neue',sans-serif;color:#fff;font-weight:400;flex-shrink:0;">3</div>
+        <div style="text-align:left;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:12px;">chrome://extensions</div>
+          <div style="font-size:11px;color:var(--muted);">Enable Developer Mode → Load unpacked</div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-actions" style="position:relative;z-index:2;">
+      <a href="LDDEnhancerv.36.zip" download class="btn-cta-main">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Unpacked Extension
+      </a>
+      <a href="https://www.buymeacoffee.com/lavenderdragon" target="_blank" class="btn-ghost">
+        ☕ Buy me a coffee
+      </a>
+    </div>
+    <div class="cta-fine">v36 · Chrome Web Store submission in progress · Unpack in chrome://extensions · Free forever</div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="display:block;padding:0;border-top:1px solid var(--border);">
+
+  <!-- Buy Me a Coffee strip -->
+  <div style="background:rgba(255,189,40,0.05);border-bottom:1px solid rgba(255,189,40,0.12);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#FFDD00,#FF813F);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">☕</div>
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;margin-bottom:3px;">Enjoying LDD MD Enhancer?</div>
+        <div style="font-size:13px;color:var(--muted2);line-height:1.5;">This extension is free and always will be. If it saves you time, a coffee goes a long way toward keeping it updated.</div>
+      </div>
+    </div>
+    <a href="https://www.buymeacoffee.com/lavenderdragon" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:11px 24px;background:linear-gradient(135deg,#FFDD00,#FF9500);color:#1a1000;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;border-radius:12px;text-decoration:none;white-space:nowrap;box-shadow:0 6px 20px rgba(255,189,40,0.3);transition:opacity 0.2s,transform 0.2s;" onmouseover="this.style.opacity='0.88';this.style.transform='translateY(-1px)'" onmouseout="this.style.opacity='1';this.style.transform='translateY(0)'">
+      ☕ Buy me a coffee
+    </a>
+  </div>
+
+  <!-- Legal disclaimer -->
+  <div style="background:rgba(255,255,255,0.015);border-bottom:1px solid var(--border);padding:20px 40px;">
+    <p style="font-size:11px;color:var(--muted);line-height:1.75;max-width:960px;">
+      <strong style="color:var(--muted2);font-family:'Syne',sans-serif;font-weight:700;">Legal Notice &amp; Disclaimer —</strong>
+      LDD MD Enhancer is an independent, community-built Chrome extension created by LavenderDragonDesign. It is not affiliated with, endorsed by, or in any way officially connected to MyDesigns.io or its parent company. MyDesigns.io, its platform, branding, services, and all associated intellectual property are the sole property of their respective owners. This extension interacts with the MyDesigns.io interface as a browser-side enhancement only and does not access, store, transmit, or modify any account data, credentials, or proprietary content beyond what is necessary to provide the enhancement features described on this page. Use of this extension is at your own discretion. The extension author makes no warranties regarding compatibility with future versions of MyDesigns.io.
+    </p>
+  </div>
+
+  <!-- Footer bottom bar -->
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:22px 40px;">
+    <div style="display:flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;">
+      <div style="width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#5b5ef4,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;">🐉</div>
+      LDD MD Enhancer
+    </div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+      <a href="privacy.html" class="footer-link">Privacy Policy</a>
+      <a href="https://www.buymeacoffee.com/lavenderdragon" target="_blank" rel="noopener" class="footer-link">Support the project</a>
+    </div>
+    <div style="font-size:11px;color:var(--muted);">Built with ❤️ by LavenderDragonDesign &nbsp;·&nbsp; Not affiliated with MyDesigns.io</div>
+  </div>
+</footer>
+
+</body>
+</html>
