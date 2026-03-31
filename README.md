@@ -1,4 +1,4 @@
-🚀 What's New in v35
+🚀 What's New in v36
 This isn't a patch. This is a full rebuild + workflow upgrade.
 🧩 Modular Controls NEW
 Control each core system independently — MD Enhancer, Dock, Drag & Drop, and Auto Rename. Toggle from the extension popup or settings panel. No more all-or-nothing.
@@ -19,16 +19,4 @@ Cleaner structure, more stable injection, better performance. This version sets 
 Drag overlay gets stuck — Dragging from Chrome's download bar no longer locks the overlay open. ✕ dismisses it for the whole session, and it auto-hides when the drag leaves the window.
 Rename panel ✕ now gives a choice — Closing with ✕ now asks: Upload without renaming or Cancel upload. Previously it always uploaded silently.
 "Keep names" → "Skip Rename" — Clearer label that describes what the button actually does.****
-<<<<<<< HEAD
 
-
-## GitHub Pages
-
-This landing page is ready to publish from the repository root with GitHub Pages.
-
-- `index.html` is the entry page
-- assets use relative paths
-- `.nojekyll` is included for Pages compatibility
-- `icon128.png` is used as the site logo and favicon
-=======
->>>>>>> 0030f915a6300acb49433178b61670e0c21edae4
